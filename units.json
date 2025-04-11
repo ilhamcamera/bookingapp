@@ -1,0 +1,490 @@
+{
+  "categories": [
+    "Semua",
+    "Proyektor",
+    "Modem",
+    "Adapter Lensa",
+    "Baterai",
+    "Kabel",
+    "Memory Card",
+    "Tripod",
+    "Camcorder",
+    "Lighting",
+    "Audio Support",
+    "Video Support",
+    "Action Camera",
+    "Gimbal",
+    "Lensa Sony",
+    "Lensa Canon",
+    "Lensa Fujifilm",
+    "Lensa Nikon",
+    "iPhone",
+    "iPad"
+  ],
+  "units": [
+    {
+      "name": "EPSON SB300",
+      "category": "Proyektor"
+    },
+    {
+      "name": "EPSON SB300 + Screen",
+      "category": "Proyektor"
+    },
+    {
+      "name": "HUAWEI B628 / ORBIT MAX H1",
+      "category": "Modem"
+    },
+    {
+      "name": "CANON EF to EOS M",
+      "category": "Adapter Lensa"
+    },
+    {
+      "name": "SIGMA MC-11 EF to E-MOUNT",
+      "category": "Adapter Lensa"
+    },
+    {
+      "name": "LP-E17",
+      "category": "Baterai"
+    },
+    {
+      "name": "FUJIFILM W16",
+      "category": "Baterai"
+    },
+    {
+      "name": "NP-FW50",
+      "category": "Baterai"
+    },
+    {
+      "name": "DUMMY SONY NP-FW50",
+      "category": "Baterai"
+    },
+    {
+      "name": "DUMMY LP-E6",
+      "category": "Baterai"
+    },
+    {
+      "name": "Vention HDMI 3m",
+      "category": "Kabel"
+    },
+    {
+      "name": "Vention HDMI 10m",
+      "category": "Kabel"
+    },
+    {
+      "name": "Vention HDMI 15m",
+      "category": "Kabel"
+    },
+    {
+      "name": "Vention HDMI 20m",
+      "category": "Kabel"
+    },
+    {
+      "name": "SanDisk Ultra 16GB",
+      "category": "Memory Card"
+    },
+    {
+      "name": "SanDisk Ultra 32GB",
+      "category": "Memory Card"
+    },
+    {
+      "name": "SanDisk Ultra 64GB",
+      "category": "Memory Card"
+    },
+    {
+      "name": "TAKARA",
+      "category": "Tripod"
+    },
+    {
+      "name": "VELBON",
+      "category": "Tripod"
+    },
+    {
+      "name": "SHOOTING",
+      "category": "Tripod"
+    },
+    {
+      "name": "SONY HANDYCAM PJ380E FULL HD",
+      "category": "Camcorder"
+    },
+    {
+      "name": "SONY MC2500",
+      "category": "Camcorder"
+    },
+    {
+      "name": "SONY MC2500 + TRIPOD",
+      "category": "Camcorder"
+    },
+    {
+      "name": "SONY NX100",
+      "category": "Camcorder"
+    },
+    {
+      "name": "SONY NX100 + TRIPOD",
+      "category": "Camcorder"
+    },
+    {
+      "name": "FLASH TT685",
+      "category": "Lighting"
+    },
+    {
+      "name": "RINGLIGHT 18 INCH",
+      "category": "Lighting"
+    },
+    {
+      "name": "GODOX P260C",
+      "category": "Lighting"
+    },
+    {
+      "name": "RINGLIGHT 18\" + STAND",
+      "category": "Lighting"
+    },
+    {
+      "name": "STARLIGHT AL-120X + STAND",
+      "category": "Lighting"
+    },
+    {
+      "name": "PAKET LIGHTING NICEFOTO",
+      "category": "Lighting"
+    },
+    {
+      "name": "FLASH TT600 UNIVERSAL",
+      "category": "Lighting"
+    },
+    {
+      "name": "GODOX LED 308C II",
+      "category": "Lighting"
+    },
+    {
+      "name": "YONGNUO LED YN300 III",
+      "category": "Lighting"
+    },
+    {
+      "name": "GODOX LED 308C II + STAND",
+      "category": "Lighting"
+    },
+    {
+      "name": "YONGNUO LED YN300 III + STAND",
+      "category": "Lighting"
+    },
+    {
+      "name": "BAOFENG UV 82",
+      "category": "Audio Support"
+    },
+    {
+      "name": "SONY PX-240",
+      "category": "Audio Support"
+    },
+    {
+      "name": "BOYA BY-MM1",
+      "category": "Audio Support"
+    },
+    {
+      "name": "SONY ECM-XYST1M",
+      "category": "Audio Support"
+    },
+    {
+      "name": "ZOOM H1N RECORDER",
+      "category": "Audio Support"
+    },
+    {
+      "name": "TASCAM DR 40",
+      "category": "Audio Support"
+    },
+    {
+      "name": "BOYA BY-WM4 PRO",
+      "category": "Audio Support"
+    },
+    {
+      "name": "BOYA WM8PRO WIRELESS",
+      "category": "Audio Support"
+    },
+    {
+      "name": "SARAMONIC B2 WIRELESS",
+      "category": "Audio Support"
+    },
+    {
+      "name": "AVMATRIX PVS0403U",
+      "category": "Video Support"
+    },
+    {
+      "name": "HDMI EXTENDER",
+      "category": "Video Support"
+    },
+    {
+      "name": "HDMI EXTENDER (Include LAN 50m)",
+      "category": "Video Support"
+    },
+    {
+      "name": "VIDEO CAPTURE WITH LOOP",
+      "category": "Video Support"
+    },
+    {
+      "name": "AVMATRIX SDI TO HDMI",
+      "category": "Video Support"
+    },
+    {
+      "name": "EZCAP HD60 GAME RAW",
+      "category": "Video Support"
+    },
+    {
+      "name": "HDMI WIRELESS CB8833",
+      "category": "Video Support"
+    },
+    {
+      "name": "ROLAND V-02HD",
+      "category": "Video Support"
+    },
+    {
+      "name": "BLACKMAGIC ATEM MINI",
+      "category": "Video Support"
+    },
+    {
+      "name": "HOLLYLAND MARS 300 PRO",
+      "category": "Video Support"
+    },
+    {
+      "name": "HOLLYLAND MARS 400S PRO",
+      "category": "Video Support"
+    },
+    {
+      "name": "GOPRO HERO+",
+      "category": "Action Camera"
+    },
+    {
+      "name": "GOPRO HERO 4",
+      "category": "Action Camera"
+    },
+    {
+      "name": "GOPRO HERO 9",
+      "category": "Action Camera"
+    },
+    {
+      "name": "RICOH THETA 360",
+      "category": "Action Camera"
+    },
+    {
+      "name": "INSTA 360 R",
+      "category": "Action Camera"
+    },
+    {
+      "name": "INSTA 360 R TWIN",
+      "category": "Action Camera"
+    },
+    {
+      "name": "ZHIYUN CRANE PLUS",
+      "category": "Gimbal"
+    },
+    {
+      "name": "DJI RONIN-S",
+      "category": "Gimbal"
+    },
+    {
+      "name": "MOZA AIRCROSS 2",
+      "category": "Gimbal"
+    },
+    {
+      "name": "BRICA B-STEADY PRO 2022",
+      "category": "Gimbal"
+    },
+    {
+      "name": "DJI OSMO 4 MOBILE",
+      "category": "Gimbal"
+    },
+    {
+      "name": "ZHIYUN M2",
+      "category": "Gimbal"
+    },
+    {
+      "name": "FEIYU G6 MAX",
+      "category": "Gimbal"
+    },
+    {
+      "name": "7ARTISANS 35mm F1.2",
+      "category": "Lensa Sony"
+    },
+    {
+      "name": "Sony E 35mm F1.8 OSS",
+      "category": "Lensa Sony"
+    },
+    {
+      "name": "Sony FE 28-70mm F3.5-5.6",
+      "category": "Lensa Sony"
+    },
+    {
+      "name": "Sony E 50mm F1.8 OSS",
+      "category": "Lensa Sony"
+    },
+    {
+      "name": "Sony FE 50mm F1.8",
+      "category": "Lensa Sony"
+    },
+    {
+      "name": "Tamron 24mm F2.8 FE",
+      "category": "Lensa Sony"
+    },
+    {
+      "name": "Tamron 18-200mm F3.5-6.3",
+      "category": "Lensa Sony"
+    },
+    {
+      "name": "Sigma 30mm F1.4 DC DN",
+      "category": "Lensa Sony"
+    },
+    {
+      "name": "Zeiss FE 55mm F1.8",
+      "category": "Lensa Sony"
+    },
+    {
+      "name": "Sony FE 28mm F2",
+      "category": "Lensa Sony"
+    },
+    {
+      "name": "Sigma 16mm F1.4 DC DN",
+      "category": "Lensa Sony"
+    },
+    {
+      "name": "Sony FE 85mm F1.8",
+      "category": "Lensa Sony"
+    },
+    {
+      "name": "Sony E 18-105mm F4 G",
+      "category": "Lensa Sony"
+    },
+    {
+      "name": "Sony FE 35mm F1.8",
+      "category": "Lensa Sony"
+    },
+    {
+      "name": "Sigma 35mm F1.4 DG HSM",
+      "category": "Lensa Sony"
+    },
+    {
+      "name": "Sony FE 24-70mm F4 ZA",
+      "category": "Lensa Sony"
+    },
+    {
+      "name": "Zeiss FE 50mm F1.4",
+      "category": "Lensa Sony"
+    },
+    {
+      "name": "Sigma 85mm F1.4 DG HSM",
+      "category": "Lensa Sony"
+    },
+    {
+      "name": "Canon EF-M 22mm F2",
+      "category": "Lensa Canon"
+    },
+    {
+      "name": "Canon EF-M 55-200mm",
+      "category": "Lensa Canon"
+    },
+    {
+      "name": "Canon EF 100mm F2 USM",
+      "category": "Lensa Canon"
+    },
+    {
+      "name": "Canon EF 17-35mm F2.8L",
+      "category": "Lensa Canon"
+    },
+    {
+      "name": "Canon EF-S 18-55mm",
+      "category": "Lensa Canon"
+    },
+    {
+      "name": "Canon EF 50mm F1.8 II",
+      "category": "Lensa Canon"
+    },
+    {
+      "name": "Canon EF 50mm F1.8 STM",
+      "category": "Lensa Canon"
+    },
+    {
+      "name": "Canon EF-S 18-135mm",
+      "category": "Lensa Canon"
+    },
+    {
+      "name": "7Artisans 35mm F1.2",
+      "category": "Lensa Fujifilm"
+    },
+    {
+      "name": "Viltrox 33mm F1.4",
+      "category": "Lensa Fujifilm"
+    },
+    {
+      "name": "Fujinon XC 35mm F2",
+      "category": "Lensa Fujifilm"
+    },
+    {
+      "name": "Fujinon 23mm F1.4 R",
+      "category": "Lensa Fujifilm"
+    },
+    {
+      "name": "Fujinon XF 35mm F1.4 R",
+      "category": "Lensa Fujifilm"
+    },
+    {
+      "name": "Fujinon XF 56mm F1.2 R",
+      "category": "Lensa Fujifilm"
+    },
+    {
+      "name": "Fujinon 50-230mm OIS II",
+      "category": "Lensa Fujifilm"
+    },
+    {
+      "name": "Nikon AF-D 50mm F1.8",
+      "category": "Lensa Nikon"
+    },
+    {
+      "name": "Yongnuo 35mm F2",
+      "category": "Lensa Nikon"
+    },
+    {
+      "name": "Nikon AF-S 35mm F1.8 DX",
+      "category": "Lensa Nikon"
+    },
+    {
+      "name": "Nikon AF-S 50mm F1.8 G",
+      "category": "Lensa Nikon"
+    },
+    {
+      "name": "iPhone XR",
+      "category": "iPhone"
+    },
+    {
+      "name": "iPhone 11",
+      "category": "iPhone"
+    },
+    {
+      "name": "iPhone 11 PRO",
+      "category": "iPhone"
+    },
+    {
+      "name": "iPhone 12",
+      "category": "iPhone"
+    },
+    {
+      "name": "iPhone 12 PRO",
+      "category": "iPhone"
+    },
+    {
+      "name": "iPhone 13",
+      "category": "iPhone"
+    },
+    {
+      "name": "iPhone 13 PRO",
+      "category": "iPhone"
+    },
+    {
+      "name": "iPhone 14 PRO",
+      "category": "iPhone"
+    },
+    {
+      "name": "iPhone 14 PRO MAX",
+      "category": "iPhone"
+    },
+    {
+      "name": "iPad 9",
+      "category": "iPad"
+    }
+  ]
+}
