@@ -1,6 +1,5 @@
 {
   "categories": [
-    "Semua",
     "Proyektor",
     "Modem",
     "Adapter Lensa",
@@ -14,477 +13,1136 @@
     "Video Support",
     "Action Camera",
     "Gimbal",
+    "Kamera & Body",
     "Lensa Sony",
     "Lensa Canon",
     "Lensa Fujifilm",
     "Lensa Nikon",
     "iPhone",
-    "iPad"
+    "iPad",
+    "Laptop & Komputer",
+    "CADANGAN (UNIT SECOND)"
   ],
   "units": [
     {
-      "name": "EPSON SB300",
+      "name": "Proyektor Epson SB300",
       "category": "Proyektor"
     },
     {
-      "name": "EPSON SB300 + Screen",
-      "category": "Proyektor"
-    },
-    {
-      "name": "HUAWEI B628 / ORBIT MAX H1",
+      "name": "Modem",
       "category": "Modem"
     },
     {
-      "name": "CANON EF to EOS M",
+      "name": "Adaptor for EOS M",
       "category": "Adapter Lensa"
     },
     {
-      "name": "SIGMA MC-11 EF to E-MOUNT",
+      "name": "Adapter Sigma MC-11",
       "category": "Adapter Lensa"
     },
     {
-      "name": "LP-E17",
+      "name": "Adapter Sigma Canon EF-E",
+      "category": "Adapter Lensa"
+    },
+    {
+      "name": "Adapter HDMI to HDMI",
+      "category": "Adapter Lensa"
+    },
+    {
+      "name": "Adapter Canon RF",
+      "category": "Adapter Lensa"
+    },
+    {
+      "name": "Adapter Canon RF",
+      "category": "Adapter Lensa"
+    },
+    {
+      "name": "Adapter EF to EOS M",
+      "category": "Adapter Lensa"
+    },
+    {
+      "name": "Adapter EF to EOS R",
+      "category": "Adapter Lensa"
+    },
+    {
+      "name": "Baterai LP-E8",
       "category": "Baterai"
     },
     {
-      "name": "FUJIFILM W16",
+      "name": "Baterai LP-E8",
       "category": "Baterai"
     },
     {
-      "name": "NP-FW50",
+      "name": "Baterai LP-E10",
       "category": "Baterai"
     },
     {
-      "name": "DUMMY SONY NP-FW50",
+      "name": "Baterai LP-E10",
       "category": "Baterai"
     },
     {
-      "name": "DUMMY LP-E6",
+      "name": "Baterai LP-E6",
       "category": "Baterai"
     },
     {
-      "name": "Vention HDMI 3m",
+      "name": "Baterai LP-E17",
+      "category": "Baterai"
+    },
+    {
+      "name": "Baterai EN-EL14",
+      "category": "Baterai"
+    },
+    {
+      "name": "Baterai EN-EL14",
+      "category": "Baterai"
+    },
+    {
+      "name": "Baterai FW50",
+      "category": "Baterai"
+    },
+    {
+      "name": "Baterai FW50",
+      "category": "Baterai"
+    },
+    {
+      "name": "Baterai dummy FW50",
+      "category": "Baterai"
+    },
+    {
+      "name": "Baterai dummy FW50",
+      "category": "Baterai"
+    },
+    {
+      "name": "Baterai LP-E8",
+      "category": "Baterai"
+    },
+    {
+      "name": "Baterai LP-E12",
+      "category": "Baterai"
+    },
+    {
+      "name": "Baterai MC 2500",
+      "category": "Baterai"
+    },
+    {
+      "name": "Baterai MC 2500",
+      "category": "Baterai"
+    },
+    {
+      "name": "Baterai MC 2500",
+      "category": "Baterai"
+    },
+    {
+      "name": "Baterai MC 2500",
+      "category": "Baterai"
+    },
+    {
+      "name": "Baterai MC 2500",
+      "category": "Baterai"
+    },
+    {
+      "name": "Baterai flash AA",
+      "category": "Baterai"
+    },
+    {
+      "name": "Baterai W126",
+      "category": "Baterai"
+    },
+    {
+      "name": "Baterai NP-FZ100",
+      "category": "Baterai"
+    },
+    {
+      "name": "Kabel HDMI 5m",
       "category": "Kabel"
     },
     {
-      "name": "Vention HDMI 10m",
+      "name": "HDMI 10m",
       "category": "Kabel"
     },
     {
-      "name": "Vention HDMI 15m",
+      "name": "Kabel HDMI 20m",
       "category": "Kabel"
     },
     {
-      "name": "Vention HDMI 20m",
+      "name": "Kabel HDMI 15m",
       "category": "Kabel"
     },
     {
-      "name": "SanDisk Ultra 16GB",
+      "name": "HDMI wireless",
+      "category": "Kabel"
+    },
+    {
+      "name": "HDMI wireless",
+      "category": "Kabel"
+    },
+    {
+      "name": "HDMI micro",
+      "category": "Kabel"
+    },
+    {
+      "name": "HDMI to HDMI 3m",
+      "category": "Kabel"
+    },
+    {
+      "name": "HDMI to HDMI 5m",
+      "category": "Kabel"
+    },
+    {
+      "name": "Memory 16GB",
       "category": "Memory Card"
     },
     {
-      "name": "SanDisk Ultra 32GB",
+      "name": "Memory 16GB",
       "category": "Memory Card"
     },
     {
-      "name": "SanDisk Ultra 64GB",
+      "name": "Memory 32GB",
       "category": "Memory Card"
     },
     {
-      "name": "TAKARA",
+      "name": "Memory 64GB",
+      "category": "Memory Card"
+    },
+    {
+      "name": "Tripod camcorder",
       "category": "Tripod"
     },
     {
-      "name": "VELBON",
+      "name": "Tripod camcorder",
       "category": "Tripod"
     },
     {
-      "name": "SHOOTING",
+      "name": "Tripod camcorder",
       "category": "Tripod"
     },
     {
-      "name": "SONY HANDYCAM PJ380E FULL HD",
+      "name": "Tripod Takara Raiz",
+      "category": "Tripod"
+    },
+    {
+      "name": "Tripod Velbon",
+      "category": "Tripod"
+    },
+    {
+      "name": "Tripod Buffalo",
+      "category": "Tripod"
+    },
+    {
+      "name": "Monopod",
+      "category": "Tripod"
+    },
+    {
+      "name": "Sony Camcorder MC 2500",
       "category": "Camcorder"
     },
     {
-      "name": "SONY MC2500",
+      "name": "Sony Camcorder MC 2500",
       "category": "Camcorder"
     },
     {
-      "name": "SONY MC2500 + TRIPOD",
+      "name": "Sony Camcorder MC 2500",
       "category": "Camcorder"
     },
     {
-      "name": "SONY NX100",
+      "name": "Sony Handycam PJ380E",
       "category": "Camcorder"
     },
     {
-      "name": "SONY NX100 + TRIPOD",
+      "name": "Sony NX 100",
       "category": "Camcorder"
     },
     {
-      "name": "FLASH TT685",
+      "name": "Sony NX 100",
+      "category": "Camcorder"
+    },
+    {
+      "name": "Godox lighting P260C",
       "category": "Lighting"
     },
     {
-      "name": "RINGLIGHT 18 INCH",
+      "name": "Godox lighting P260C",
       "category": "Lighting"
     },
     {
-      "name": "GODOX P260C",
+      "name": "Ringlight 18 inch",
       "category": "Lighting"
     },
     {
-      "name": "RINGLIGHT 18\" + STAND",
+      "name": "Ringlight 18 inch + stand",
       "category": "Lighting"
     },
     {
-      "name": "STARLIGHT AL-120X + STAND",
+      "name": "Starlight AL-120X + stand",
       "category": "Lighting"
     },
     {
-      "name": "PAKET LIGHTING NICEFOTO",
+      "name": "Lighting nice foto paket wedding",
       "category": "Lighting"
     },
     {
-      "name": "FLASH TT600 UNIVERSAL",
+      "name": "Lighting video LED",
       "category": "Lighting"
     },
     {
-      "name": "GODOX LED 308C II",
+      "name": "Lighting video LED",
       "category": "Lighting"
     },
     {
-      "name": "YONGNUO LED YN300 III",
+      "name": "Godox V850 II",
       "category": "Lighting"
     },
     {
-      "name": "GODOX LED 308C II + STAND",
+      "name": "Godox LED 308C II",
       "category": "Lighting"
     },
     {
-      "name": "YONGNUO LED YN300 III + STAND",
+      "name": "Godox LED 308C II",
       "category": "Lighting"
     },
     {
-      "name": "BAOFENG UV 82",
+      "name": "Yongnuo 300III",
+      "category": "Lighting"
+    },
+    {
+      "name": "Reflektor",
+      "category": "Lighting"
+    },
+    {
+      "name": "Boya BY-MM1",
       "category": "Audio Support"
     },
     {
-      "name": "SONY PX-240",
+      "name": "Boya BY-WM4",
       "category": "Audio Support"
     },
     {
-      "name": "BOYA BY-MM1",
+      "name": "Boya WM8 Pro",
       "category": "Audio Support"
     },
     {
-      "name": "SONY ECM-XYST1M",
+      "name": "Saramonic B2",
       "category": "Audio Support"
     },
     {
-      "name": "ZOOM H1N RECORDER",
+      "name": "Saramonic B2 (kabel kamera tidak ada)",
       "category": "Audio Support"
     },
     {
-      "name": "TASCAM DR 40",
+      "name": "Saramonic B2 iPhone",
       "category": "Audio Support"
     },
     {
-      "name": "BOYA BY-WM4 PRO",
+      "name": "Saramonic B2+ (punya live) terbaru",
       "category": "Audio Support"
     },
     {
-      "name": "BOYA WM8PRO WIRELESS",
+      "name": "Tascam DR40",
       "category": "Audio Support"
     },
     {
-      "name": "SARAMONIC B2 WIRELESS",
+      "name": "Recorder Zoom Audio H1N",
       "category": "Audio Support"
     },
     {
-      "name": "AVMATRIX PVS0403U",
+      "name": "Hollyland Mars 300 - 1",
+      "category": "Audio Support"
+    },
+    {
+      "name": "Hollyland Mars 300 - 2",
+      "category": "Audio Support"
+    },
+    {
+      "name": "HDMI video capture",
       "category": "Video Support"
     },
     {
-      "name": "HDMI EXTENDER",
+      "name": "HDMI Ezcap HD60",
       "category": "Video Support"
     },
     {
-      "name": "HDMI EXTENDER (Include LAN 50m)",
+      "name": "HDMI Ezcap Gamelink",
       "category": "Video Support"
     },
     {
-      "name": "VIDEO CAPTURE WITH LOOP",
+      "name": "ATEM Mini",
       "category": "Video Support"
     },
     {
-      "name": "AVMATRIX SDI TO HDMI",
+      "name": "Blackmagic ATEM Mini",
       "category": "Video Support"
     },
     {
-      "name": "EZCAP HD60 GAME RAW",
+      "name": "HDMI extender + LAN 50m",
       "category": "Video Support"
     },
     {
-      "name": "HDMI WIRELESS CB8833",
+      "name": "AV Matrix SDI to HDMI",
       "category": "Video Support"
     },
     {
-      "name": "ROLAND V-02HD",
+      "name": "AV Matrix SDI to HDMI",
       "category": "Video Support"
     },
     {
-      "name": "BLACKMAGIC ATEM MINI",
+      "name": "Mixer AV Matrix",
       "category": "Video Support"
     },
     {
-      "name": "HOLLYLAND MARS 300 PRO",
-      "category": "Video Support"
-    },
-    {
-      "name": "HOLLYLAND MARS 400S PRO",
-      "category": "Video Support"
-    },
-    {
-      "name": "GOPRO HERO+",
+      "name": "GoPro Hero+",
       "category": "Action Camera"
     },
     {
-      "name": "GOPRO HERO 4",
+      "name": "GoPro Hero 9",
       "category": "Action Camera"
     },
     {
-      "name": "GOPRO HERO 9",
+      "name": "DJI Osmo Pocket 2",
       "category": "Action Camera"
     },
     {
-      "name": "RICOH THETA 360",
+      "name": "Insta360",
       "category": "Action Camera"
     },
     {
-      "name": "INSTA 360 R",
-      "category": "Action Camera"
-    },
-    {
-      "name": "INSTA 360 R TWIN",
-      "category": "Action Camera"
-    },
-    {
-      "name": "ZHIYUN CRANE PLUS",
+      "name": "Gimbal Zhiyun M2",
       "category": "Gimbal"
     },
     {
-      "name": "DJI RONIN-S",
+      "name": "Gimbal Zhiyun Crane Plus",
       "category": "Gimbal"
     },
     {
-      "name": "MOZA AIRCROSS 2",
+      "name": "Gimbal Feiyu G6 Max",
       "category": "Gimbal"
     },
     {
-      "name": "BRICA B-STEADY PRO 2022",
+      "name": "Gimbal Ronin S",
       "category": "Gimbal"
     },
     {
-      "name": "DJI OSMO 4 MOBILE",
+      "name": "Gimbal Moza AirCross 2",
       "category": "Gimbal"
     },
     {
-      "name": "ZHIYUN M2",
+      "name": "Brica BSteady Pro",
       "category": "Gimbal"
     },
     {
-      "name": "FEIYU G6 MAX",
-      "category": "Gimbal"
+      "name": "Canon 1100D",
+      "category": "Kamera & Body"
     },
     {
-      "name": "7ARTISANS 35mm F1.2",
+      "name": "Canon 1200D",
+      "category": "Kamera & Body"
+    },
+    {
+      "name": "Canon 1300D",
+      "category": "Kamera & Body"
+    },
+    {
+      "name": "Canon 1300D",
+      "category": "Kamera & Body"
+    },
+    {
+      "name": "Canon 550D",
+      "category": "Kamera & Body"
+    },
+    {
+      "name": "Canon 5D Mark II",
+      "category": "Kamera & Body"
+    },
+    {
+      "name": "Canon 600D",
+      "category": "Kamera & Body"
+    },
+    {
+      "name": "Canon 600D",
+      "category": "Kamera & Body"
+    },
+    {
+      "name": "Canon 600D / Rebel T3i",
+      "category": "Kamera & Body"
+    },
+    {
+      "name": "Canon 60D Kit",
+      "category": "Kamera & Body"
+    },
+    {
+      "name": "Canon 650D",
+      "category": "Kamera & Body"
+    },
+    {
+      "name": "Canon 6D (1)",
+      "category": "Kamera & Body"
+    },
+    {
+      "name": "Canon 6D (2)",
+      "category": "Kamera & Body"
+    },
+    {
+      "name": "Canon 700D",
+      "category": "Kamera & Body"
+    },
+    {
+      "name": "Canon 750D",
+      "category": "Kamera & Body"
+    },
+    {
+      "name": "Canon M10 (1)",
+      "category": "Kamera & Body"
+    },
+    {
+      "name": "Canon M10 (2)",
+      "category": "Kamera & Body"
+    },
+    {
+      "name": "Canon M3",
+      "category": "Kamera & Body"
+    },
+    {
+      "name": "Fujifilm X-A10",
+      "category": "Kamera & Body"
+    },
+    {
+      "name": "Fujifilm X-A2",
+      "category": "Kamera & Body"
+    },
+    {
+      "name": "Fujifilm X-A3",
+      "category": "Kamera & Body"
+    },
+    {
+      "name": "Fujifilm X-A3 (2)",
+      "category": "Kamera & Body"
+    },
+    {
+      "name": "Fujifilm X-A5",
+      "category": "Kamera & Body"
+    },
+    {
+      "name": "Fujifilm X-A7",
+      "category": "Kamera & Body"
+    },
+    {
+      "name": "Fujifilm X-T20 (BO)",
+      "category": "Kamera & Body"
+    },
+    {
+      "name": "Fujifilm X-T3 (body only)",
+      "category": "Kamera & Body"
+    },
+    {
+      "name": "Nikon D3200",
+      "category": "Kamera & Body"
+    },
+    {
+      "name": "Nikon D3400",
+      "category": "Kamera & Body"
+    },
+    {
+      "name": "Sony a6000 + Kit",
+      "category": "Kamera & Body"
+    },
+    {
+      "name": "Sony a6000 + Kit",
+      "category": "Kamera & Body"
+    },
+    {
+      "name": "Sony a6000 + Kit",
+      "category": "Kamera & Body"
+    },
+    {
+      "name": "Sony A6300 + Kit",
+      "category": "Kamera & Body"
+    },
+    {
+      "name": "Sony A6300 (flash tidak bisa)",
+      "category": "Kamera & Body"
+    },
+    {
+      "name": "Sony A6400 + Kit",
+      "category": "Kamera & Body"
+    },
+    {
+      "name": "Sony A7 II (BO) L-plate",
+      "category": "Kamera & Body"
+    },
+    {
+      "name": "Sony A7 II (BO) L-plate",
+      "category": "Kamera & Body"
+    },
+    {
+      "name": "Sony A7 II (BO)",
+      "category": "Kamera & Body"
+    },
+    {
+      "name": "Sony A7 III (body only)",
+      "category": "Kamera & Body"
+    },
+    {
+      "name": "Sony Kit 16-50mm",
       "category": "Lensa Sony"
     },
     {
-      "name": "Sony E 35mm F1.8 OSS",
+      "name": "Sony E 35mm f1.8",
       "category": "Lensa Sony"
     },
     {
-      "name": "Sony FE 28-70mm F3.5-5.6",
+      "name": "Sony E 35mm f1.8",
       "category": "Lensa Sony"
     },
     {
-      "name": "Sony E 50mm F1.8 OSS",
+      "name": "Sony E 50mm f1.8",
       "category": "Lensa Sony"
     },
     {
-      "name": "Sony FE 50mm F1.8",
+      "name": "Sony E 18-105mm",
       "category": "Lensa Sony"
     },
     {
-      "name": "Tamron 24mm F2.8 FE",
+      "name": "Sony 24-70mm f4 OSS Zeiss",
       "category": "Lensa Sony"
     },
     {
-      "name": "Tamron 18-200mm F3.5-6.3",
+      "name": "Sony FE 28-70mm",
       "category": "Lensa Sony"
     },
     {
-      "name": "Sigma 30mm F1.4 DC DN",
+      "name": "Sony FE 28mm",
       "category": "Lensa Sony"
     },
     {
-      "name": "Zeiss FE 55mm F1.8",
+      "name": "Sony FE 35mm f1.8",
       "category": "Lensa Sony"
     },
     {
-      "name": "Sony FE 28mm F2",
+      "name": "Sony FE 50mm f1.8",
       "category": "Lensa Sony"
     },
     {
-      "name": "Sigma 16mm F1.4 DC DN",
+      "name": "Sony FE 50mm f1.8",
       "category": "Lensa Sony"
     },
     {
-      "name": "Sony FE 85mm F1.8",
+      "name": "Sony FE 50mm f1.8",
       "category": "Lensa Sony"
     },
     {
-      "name": "Sony E 18-105mm F4 G",
+      "name": "Sony FE 55mm Zeiss",
       "category": "Lensa Sony"
     },
     {
-      "name": "Sony FE 35mm F1.8",
+      "name": "Sony FE 85mm f1.8",
       "category": "Lensa Sony"
     },
     {
-      "name": "Sigma 35mm F1.4 DG HSM",
+      "name": "Sony Sigma 16mm f1.4 for Sony APS-C",
       "category": "Lensa Sony"
     },
     {
-      "name": "Sony FE 24-70mm F4 ZA",
+      "name": "Sony Sigma 30mm f1.4 for Sony APS-C",
       "category": "Lensa Sony"
     },
     {
-      "name": "Zeiss FE 50mm F1.4",
+      "name": "Sony FE 35mm f1.4 Zeiss",
       "category": "Lensa Sony"
     },
     {
-      "name": "Sigma 85mm F1.4 DG HSM",
+      "name": "Sony Sigma Art 35mm f1.4 for Sony",
       "category": "Lensa Sony"
     },
     {
-      "name": "Canon EF-M 22mm F2",
+      "name": "Sony Sigma FE 85mm f1.4 for Sony",
+      "category": "Lensa Sony"
+    },
+    {
+      "name": "Sony Tamron 18-200mm for Sony",
+      "category": "Lensa Sony"
+    },
+    {
+      "name": "Sony Tamron 24mm for Sony",
+      "category": "Lensa Sony"
+    },
+    {
+      "name": "Canon EF 24-105mm",
       "category": "Lensa Canon"
     },
     {
-      "name": "Canon EF-M 55-200mm",
+      "name": "Canon 10-18mm",
       "category": "Lensa Canon"
     },
     {
-      "name": "Canon EF 100mm F2 USM",
+      "name": "Canon 100mm f2",
       "category": "Lensa Canon"
     },
     {
-      "name": "Canon EF 17-35mm F2.8L",
+      "name": "Canon 18-135mm",
       "category": "Lensa Canon"
     },
     {
-      "name": "Canon EF-S 18-55mm",
+      "name": "Canon 18-135mm",
       "category": "Lensa Canon"
     },
     {
-      "name": "Canon EF 50mm F1.8 II",
+      "name": "Canon 18-200mm",
       "category": "Lensa Canon"
     },
     {
-      "name": "Canon EF 50mm F1.8 STM",
+      "name": "Canon 18-55mm",
       "category": "Lensa Canon"
     },
     {
-      "name": "Canon EF-S 18-135mm",
+      "name": "Canon 22mm f2 STM EOS M",
       "category": "Lensa Canon"
     },
     {
-      "name": "7Artisans 35mm F1.2",
+      "name": "Canon 35mm f1.4 L USM",
+      "category": "Lensa Canon"
+    },
+    {
+      "name": "Canon 50mm IS II ICL 1113",
+      "category": "Lensa Canon"
+    },
+    {
+      "name": "Canon 50mm STM",
+      "category": "Lensa Canon"
+    },
+    {
+      "name": "Canon 50mm STM",
+      "category": "Lensa Canon"
+    },
+    {
+      "name": "Canon 50mm STM",
+      "category": "Lensa Canon"
+    },
+    {
+      "name": "Canon 55-250mm",
+      "category": "Lensa Canon"
+    },
+    {
+      "name": "Canon 70-200mm f2.8",
+      "category": "Lensa Canon"
+    },
+    {
+      "name": "Canon EF 17-35mm f2.8 L USM",
+      "category": "Lensa Canon"
+    },
+    {
+      "name": "Canon EF 17-40mm f4 L USM",
+      "category": "Lensa Canon"
+    },
+    {
+      "name": "Canon EF 85mm f1.8",
+      "category": "Lensa Canon"
+    },
+    {
+      "name": "Canon Sigma 35mm f1.",
+      "category": "Lensa Canon"
+    },
+    {
+      "name": "Canon Sigma Art 50mm f1.4",
+      "category": "Lensa Canon"
+    },
+    {
+      "name": "Fujifilm Sigma 30mm f1.4 for Fuji",
       "category": "Lensa Fujifilm"
     },
     {
-      "name": "Viltrox 33mm F1.4",
+      "name": "Fuji 7Artisan 35mm f1.2 for Fuji",
       "category": "Lensa Fujifilm"
     },
     {
-      "name": "Fujinon XC 35mm F2",
+      "name": "Fujifilm Viltrox 33mm f1.4 for Fuji",
       "category": "Lensa Fujifilm"
     },
     {
-      "name": "Fujinon 23mm F1.4 R",
+      "name": "Fujifilm XC 15-45mm f3.5-5.6",
       "category": "Lensa Fujifilm"
     },
     {
-      "name": "Fujinon XF 35mm F1.4 R",
+      "name": "Fujinon 23mm f1.4",
       "category": "Lensa Fujifilm"
     },
     {
-      "name": "Fujinon XF 56mm F1.2 R",
+      "name": "Fujinon 50-230mm hitam",
       "category": "Lensa Fujifilm"
     },
     {
-      "name": "Fujinon 50-230mm OIS II",
+      "name": "Fujinon XC 35mm f2",
       "category": "Lensa Fujifilm"
     },
     {
-      "name": "Nikon AF-D 50mm F1.8",
+      "name": "Fujinon XF 18-55mm f2.8-4",
+      "category": "Lensa Fujifilm"
+    },
+    {
+      "name": "Fujinon XF 35mm f1.4",
+      "category": "Lensa Fujifilm"
+    },
+    {
+      "name": "Fujinon XF 56mm f1.2 R",
+      "category": "Lensa Fujifilm"
+    },
+    {
+      "name": "Fujifilm XC 16-50mm (kit biasa)",
+      "category": "Lensa Fujifilm"
+    },
+    {
+      "name": "Fujifilm XF 18-55mm f2.8 (kit mahal)",
+      "category": "Lensa Fujifilm"
+    },
+    {
+      "name": "Nikon 24-70mm f2.8",
       "category": "Lensa Nikon"
     },
     {
-      "name": "Yongnuo 35mm F2",
+      "name": "Nikon AF-D 50mm f1.8 riskuning",
       "category": "Lensa Nikon"
     },
     {
-      "name": "Nikon AF-S 35mm F1.8 DX",
+      "name": "Nikon AFS 35mm f1.8",
       "category": "Lensa Nikon"
     },
     {
-      "name": "Nikon AF-S 50mm F1.8 G",
+      "name": "Nikon AFS 50mm f1.8",
       "category": "Lensa Nikon"
     },
     {
-      "name": "iPhone XR",
+      "name": "Nikon AFS 50mm f1.8",
+      "category": "Lensa Nikon"
+    },
+    {
+      "name": "Nikon Sigma Art 35mm f1.4 for Nikon",
+      "category": "Lensa Nikon"
+    },
+    {
+      "name": "Nikon Kit 18-55mm",
+      "category": "Lensa Nikon"
+    },
+    {
+      "name": "Nikon Kit 18-55mm",
+      "category": "Lensa Nikon"
+    },
+    {
+      "name": "Nikon YN 35mm f2",
+      "category": "Lensa Nikon"
+    },
+    {
+      "name": "Nikon Yongnuo 35mm f2N",
+      "category": "Lensa Nikon"
+    },
+    {
+      "name": "iPhone XR - 1 Coral 128GB",
       "category": "iPhone"
     },
     {
-      "name": "iPhone 11",
+      "name": "iPhone XR - 2 Coral 64GB",
       "category": "iPhone"
     },
     {
-      "name": "iPhone 11 PRO",
+      "name": "iPhone XR - 3 White 128GB iBox",
       "category": "iPhone"
     },
     {
-      "name": "iPhone 12",
+      "name": "iPhone XR - 5 Yellow",
       "category": "iPhone"
     },
     {
-      "name": "iPhone 12 PRO",
+      "name": "iPhone XR - 6 Blue",
       "category": "iPhone"
     },
     {
-      "name": "iPhone 13",
+      "name": "iPhone XR - 7 Blue JBG",
       "category": "iPhone"
     },
     {
-      "name": "iPhone 13 PRO",
+      "name": "iPhone XR - 8 Yellow JBG",
       "category": "iPhone"
     },
     {
-      "name": "iPhone 14 PRO",
+      "name": "iPhone XR - 9 Black",
       "category": "iPhone"
     },
     {
-      "name": "iPhone 14 PRO MAX",
+      "name": "iPhone XR - 10 JBG",
       "category": "iPhone"
     },
     {
-      "name": "iPad 9",
+      "name": "iPhone 11 - 1 Black",
+      "category": "iPhone"
+    },
+    {
+      "name": "iPhone 11 - 2 Black iBox",
+      "category": "iPhone"
+    },
+    {
+      "name": "iPhone 11 - 3 Black iBox",
+      "category": "iPhone"
+    },
+    {
+      "name": "iPhone 11 - 4 Purple inter",
+      "category": "iPhone"
+    },
+    {
+      "name": "iPhone 11 - 5 Mint iBox JBG",
+      "category": "iPhone"
+    },
+    {
+      "name": "iPhone 11 - 6 Black iBox",
+      "category": "iPhone"
+    },
+    {
+      "name": "iPhone 11 - 8 White iBox",
+      "category": "iPhone"
+    },
+    {
+      "name": "iPhone 11 - 9 White iBox",
+      "category": "iPhone"
+    },
+    {
+      "name": "iPhone 11 - 10 Mint inter",
+      "category": "iPhone"
+    },
+    {
+      "name": "iPhone 11 Pro - 1 White JBG",
+      "category": "iPhone"
+    },
+    {
+      "name": "iPhone 11 Pro - 2 White",
+      "category": "iPhone"
+    },
+    {
+      "name": "iPhone 11 Pro - 3 Space Grey",
+      "category": "iPhone"
+    },
+    {
+      "name": "iPhone 11 Pro - 4 White JBG",
+      "category": "iPhone"
+    },
+    {
+      "name": "iPhone 11 Pro - 5 Gold",
+      "category": "iPhone"
+    },
+    {
+      "name": "iPhone 12 - 1 White",
+      "category": "iPhone"
+    },
+    {
+      "name": "iPhone 12 - 2 White JBG",
+      "category": "iPhone"
+    },
+    {
+      "name": "iPhone 12 - 3 Black inter",
+      "category": "iPhone"
+    },
+    {
+      "name": "iPhone 12 Pro - 1 Pacific Blue JBG",
+      "category": "iPhone"
+    },
+    {
+      "name": "iPhone 12 Pro - 2 Dark Grey",
+      "category": "iPhone"
+    },
+    {
+      "name": "iPhone 13 - 1 Merah JBG",
+      "category": "iPhone"
+    },
+    {
+      "name": "iPhone 13 - 2 Hitam iBox",
+      "category": "iPhone"
+    },
+    {
+      "name": "iPhone 13 Pro",
+      "category": "iPhone"
+    },
+    {
+      "name": "iPhone 14 Pro",
+      "category": "iPhone"
+    },
+    {
+      "name": "iPhone 14 Pro - 2",
+      "category": "iPhone"
+    },
+    {
+      "name": "iPhone 14 Pro Max",
+      "category": "iPhone"
+    },
+    {
+      "name": "Pad 9",
       "category": "iPad"
+    },
+    {
+      "name": "MacBook Pro 2017",
+      "category": "Laptop & Komputer"
+    },
+    {
+      "name": "Lenovo IdeaPad 3 14 TL6",
+      "category": "Laptop & Komputer"
+    },
+    {
+      "name": "Laptop Lenovo G40-80",
+      "category": "Laptop & Komputer"
+    },
+    {
+      "name": "Laptop Lenovo G40-30",
+      "category": "Laptop & Komputer"
+    },
+    {
+      "name": "Lenovo ThinkPad X1 Carbon",
+      "category": "Laptop & Komputer"
+    },
+    {
+      "name": "Lenovo ThinkPad X270",
+      "category": "Laptop & Komputer"
+    },
+    {
+      "name": "Laptop HP 14s Athlon Gold",
+      "category": "Laptop & Komputer"
+    },
+    {
+      "name": "Lenovo IdeaPad 3",
+      "category": "Laptop & Komputer"
+    },
+    {
+      "name": "Canon 35mm F1.4 L USM second",
+      "category": "CADANGAN (UNIT SECOND)"
+    },
+    {
+      "name": "Canon 70-200mm F4 unit second",
+      "category": "CADANGAN (UNIT SECOND)"
+    },
+    {
+      "name": "Canon Sigma 35mm F1.4 for Canon second",
+      "category": "CADANGAN (UNIT SECOND)"
+    },
+    {
+      "name": "Sony FE 55mm Zeiss second",
+      "category": "CADANGAN (UNIT SECOND)"
+    },
+    {
+      "name": "Sony Sigma Art 35mm f1.4 Sony second",
+      "category": "CADANGAN (UNIT SECOND)"
+    },
+    {
+      "name": "Adapter EF to EOS R second",
+      "category": "CADANGAN (UNIT SECOND)"
+    },
+    {
+      "name": "Adapter EF to EOS RP second",
+      "category": "CADANGAN (UNIT SECOND)"
+    },
+    {
+      "name": "Canon Sigma 35mm F1.4 for Canon second",
+      "category": "CADANGAN (UNIT SECOND)"
+    },
+    {
+      "name": "Canon 24mm F1.4 for Canon second",
+      "category": "CADANGAN (UNIT SECOND)"
+    },
+    {
+      "name": "Fujifilm XC 35mm f2 (second)",
+      "category": "CADANGAN (UNIT SECOND)"
+    },
+    {
+      "name": "Sony 7Artisan 50mm F1.8 second",
+      "category": "CADANGAN (UNIT SECOND)"
+    },
+    {
+      "name": "Sony FE 50mm F1.8 (unit second)",
+      "category": "CADANGAN (UNIT SECOND)"
+    },
+    {
+      "name": "Sony FE 35mm F1.4 Zeiss second",
+      "category": "CADANGAN (UNIT SECOND)"
+    },
+    {
+      "name": "Sony Sigma Art 35mm f1.4 Sony second",
+      "category": "CADANGAN (UNIT SECOND)"
+    },
+    {
+      "name": "Canon 1200D second",
+      "category": "CADANGAN (UNIT SECOND)"
+    },
+    {
+      "name": "Canon 6D second",
+      "category": "CADANGAN (UNIT SECOND)"
+    },
+    {
+      "name": "Canon 700D unit second",
+      "category": "CADANGAN (UNIT SECOND)"
+    },
+    {
+      "name": "Canon M100 (second)",
+      "category": "CADANGAN (UNIT SECOND)"
+    },
+    {
+      "name": "Canon EOS RP (second)",
+      "category": "CADANGAN (UNIT SECOND)"
+    },
+    {
+      "name": "Canon EOS R (second)",
+      "category": "CADANGAN (UNIT SECOND)"
+    },
+    {
+      "name": "Fujifilm X-T20 (BO) second",
+      "category": "CADANGAN (UNIT SECOND)"
+    },
+    {
+      "name": "XT10 body only (second)",
+      "category": "CADANGAN (UNIT SECOND)"
+    },
+    {
+      "name": "Fujifilm X-T3 body only second",
+      "category": "CADANGAN (UNIT SECOND)"
+    },
+    {
+      "name": "Fujifilm X-H1 body only second harga sama XT3",
+      "category": "CADANGAN (UNIT SECOND)"
+    },
+    {
+      "name": "Nikon D750 (unit second)",
+      "category": "CADANGAN (UNIT SECOND)"
+    },
+    {
+      "name": "Nikon D600 second",
+      "category": "CADANGAN (UNIT SECOND)"
+    },
+    {
+      "name": "A6400 second",
+      "category": "CADANGAN (UNIT SECOND)"
+    },
+    {
+      "name": "Sony A7II (BO) (unit second)",
+      "category": "CADANGAN (UNIT SECOND)"
+    },
+    {
+      "name": "Sony A7II (BO) second",
+      "category": "CADANGAN (UNIT SECOND)"
+    },
+    {
+      "name": "Sony A6400 second",
+      "category": "CADANGAN (UNIT SECOND)"
+    },
+    {
+      "name": "Sony camcorder MC 2500 second",
+      "category": "CADANGAN (UNIT SECOND)"
+    },
+    {
+      "name": "Sony handycam CX405 second",
+      "category": "CADANGAN (UNIT SECOND)"
+    },
+    {
+      "name": "iPhone 13 unit second 1",
+      "category": "CADANGAN (UNIT SECOND)"
+    },
+    {
+      "name": "iPhone 13 unit second 2",
+      "category": "CADANGAN (UNIT SECOND)"
+    },
+    {
+      "name": "Gimbal Zhiyun Crane Plus second",
+      "category": "CADANGAN (UNIT SECOND)"
     }
   ]
 }

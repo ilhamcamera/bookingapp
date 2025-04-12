@@ -27,6 +27,11 @@ const elements = {
 
 // Utility Functions
 const utils = {
+    /**
+     * Format date to YYYY-MM-DD
+     * @param {Date} date - Date object to format
+     * @returns {string} Formatted date string
+     */
     formatDate: (date) => {
         const year = date.getFullYear();
         const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -34,21 +39,68 @@ const utils = {
         return `${year}-${month}-${day}`;
     },
 
+    /**
+     * Check if date is weekend
+     * @param {Date} date - Date to check
+     * @returns {boolean} True if weekend
+     */
     isWeekend: (date) => [0, 6].includes(date.getDay()),
 
+    /**
+     * Check if date is today
+     * @param {Date} date - Date to check
+     * @returns {boolean} True if today
+     */
+    isToday: (date) => {
+        const today = new Date();
+        return date.getDate() === today.getDate() && 
+               date.getMonth() === today.getMonth() && 
+               date.getFullYear() === today.getFullYear();
+    },
+
+    /**
+     * Get number of days in month
+     * @param {number} year - Year
+     * @param {number} month - Month (0-11)
+     * @returns {number} Days in month
+     */
     getDaysInMonth: (year, month) => new Date(year, month + 1, 0).getDate(),
 
+    /**
+     * Debounce function to limit rapid calls
+     * @param {Function} func - Function to debounce
+     * @param {number} delay - Delay in ms
+     * @returns {Function} Debounced function
+     */
     debounce: (func, delay) => {
         let timeout;
         return (...args) => {
             clearTimeout(timeout);
             timeout = setTimeout(() => func.apply(this, args), delay);
         };
+    },
+
+    /**
+     * Calculate optimal cell width based on container
+     * @returns {number} Calculated cell width
+     */
+    calculateCellWidth: () => {
+        const containerWidth = document.querySelector('.container').clientWidth;
+        const daysInMonth = utils.getDaysInMonth(state.currentYear, state.currentMonth);
+        const unitColumnWidth = 200;
+        const minCellWidth = 45;
+        const availableWidth = containerWidth - unitColumnWidth - 40;
+        
+        return Math.max(minCellWidth, Math.floor(availableWidth / daysInMonth));
     }
 };
 
 // Core Functions
 const core = {
+    /**
+     * Load units data from JSON file
+     * @returns {Promise} Promise with units data
+     */
     loadUnits: async () => {
         try {
             const response = await fetch(CONFIG.unitsJsonPath);
@@ -64,6 +116,10 @@ const core = {
         }
     },
 
+    /**
+     * Load booking data from Google Apps Script
+     * @returns {Promise} Promise with booking data
+     */
     loadBookingData: async () => {
         elements.loadingIndicator.style.display = 'flex';
         
@@ -87,20 +143,31 @@ const core = {
         }
     },
 
+    /**
+     * Generate date headers for the matrix
+     */
     generateDateHeaders: () => {
         elements.dateHeaderRow.innerHTML = '<th class="unit-header">Barang</th>';
         
         const daysInMonth = utils.getDaysInMonth(state.currentYear, state.currentMonth);
+        const cellWidth = utils.calculateCellWidth();
         
         for (let day = 1; day <= daysInMonth; day++) {
             const date = new Date(state.currentYear, state.currentMonth, day);
             const th = document.createElement('th');
-            th.textContent = day;
+            th.classList.add('date-header');
             if (utils.isWeekend(date)) th.classList.add('weekend');
+            if (utils.isToday(date)) th.classList.add('today');
+            
+            th.textContent = day;
+            th.style.minWidth = `${cellWidth}px`;
             elements.dateHeaderRow.appendChild(th);
         }
     },
 
+    /**
+     * Generate the booking matrix
+     */
     generateMatrix: () => {
         core.generateDateHeaders();
         elements.matrixBody.innerHTML = '';
@@ -109,6 +176,8 @@ const core = {
         const filteredUnits = selectedCategory === 'Semua' 
             ? state.units 
             : state.units.filter(unit => unit.category === selectedCategory);
+        
+        const cellWidth = utils.calculateCellWidth();
         
         filteredUnits.forEach(unit => {
             const row = document.createElement('tr');
@@ -126,7 +195,15 @@ const core = {
                 const cell = document.createElement('td');
                 cell.classList.add('date-cell');
                 if (utils.isWeekend(date)) cell.classList.add('weekend');
+                if (utils.isToday(date)) cell.classList.add('today');
                 
+                // Set dynamic width
+                cell.style.minWidth = `${cellWidth}px`;
+                
+                // Reset status classes
+                cell.classList.remove('available', 'booked');
+                
+                // Apply status
                 if (state.bookingData[unitDateKey]?.status === 'booked') {
                     cell.classList.add('booked');
                 } else {
@@ -139,6 +216,9 @@ const core = {
         });
     },
 
+    /**
+     * Populate filter dropdowns
+     */
     populateFilters: () => {
         // Populate category filter
         elements.filterCategory.innerHTML = '<option value="Semua">Semua</option>';
@@ -149,7 +229,7 @@ const core = {
             elements.filterCategory.appendChild(option);
         });
 
-        // Populate year filter (current year -5 to +5)
+        // Populate year filter (current year -2 to +3)
         const currentYear = new Date().getFullYear();
         elements.filterYear.innerHTML = '';
         for (let year = currentYear - 2; year <= currentYear + 3; year++) {
@@ -167,12 +247,18 @@ const core = {
 
 // Event Handlers
 const handlers = {
+    /**
+     * Handle filter changes (month/year)
+     */
     onFilterChange: () => {
         state.currentMonth = parseInt(elements.filterMonth.value);
         state.currentYear = parseInt(elements.filterYear.value);
         core.loadBookingData();
     },
 
+    /**
+     * Handle category filter change
+     */
     onCategoryChange: () => {
         // Update unit filter based on selected category
         elements.filterUnit.innerHTML = '<option value="all">Semua Barang</option>';
@@ -208,6 +294,9 @@ const init = async () => {
     elements.filterMonth.addEventListener('change', handlers.onFilterChange);
     elements.filterYear.addEventListener('change', handlers.onFilterChange);
     elements.filterUnit.addEventListener('change', core.generateMatrix);
+
+    // Handle window resize
+    window.addEventListener('resize', utils.debounce(core.generateMatrix, 300));
 };
 
 // Start the application
