@@ -1,6 +1,6 @@
 // Konfigurasi Aplikasi
 const CONFIG = {
-    googleScriptUrl: 'https://script.google.com/macros/s/AKfycbwWIKTZnSBK2Rs2kNAhmth5E8yE_5wZoZ-RW5EjXvPLqcQhIl7HgIvn81u0xfJ-w19P/exec',
+    googleScriptUrl: 'https://script.google.com/macros/s/AKfycbx8Ys03XP2VU_Jc-hrkg2tqx6ARzXsV5LndosC4zLvVYq7FteoihxLKIVauYFSc-HAz/exec',
     unitsJsonPath: 'units.json'
 };
 
@@ -9,8 +9,11 @@ const state = {
     bookingData: {},
     units: [],
     categories: [],
+    selectedUnit: null,
+    selectedDate: null,
     currentMonth: new Date().getMonth(),
-    currentYear: new Date().getFullYear()
+    currentYear: new Date().getFullYear(),
+    bookingModal: null
 };
 
 // Cache DOM Elements
@@ -18,20 +21,25 @@ const elements = {
     bookingMatrix: document.getElementById('bookingMatrix'),
     dateHeaderRow: document.getElementById('dateHeaderRow'),
     matrixBody: document.getElementById('matrixBody'),
+    monthYearDisplay: document.getElementById('monthYearDisplay'),
+    prevMonthBtn: document.getElementById('prevMonth'),
+    nextMonthBtn: document.getElementById('nextMonth'),
+    refreshBtn: document.getElementById('refreshBtn'),
+    lastUpdated: document.getElementById('lastUpdated'),
+    bookingModalElem: document.getElementById('bookingModal'),
+    bookingDateElem: document.getElementById('bookingDate'),
+    bookingUnitElem: document.getElementById('bookingUnit'),
+    bookingDescription: document.getElementById('bookingDescription'),
+    bookingStatus: document.getElementById('bookingStatus'),
     loadingIndicator: document.getElementById('loadingIndicator'),
-    filterCategory: document.getElementById('filterCategory'),
+    filterStatus: document.getElementById('filterStatus'),
     filterUnit: document.getElementById('filterUnit'),
-    filterMonth: document.getElementById('filterMonth'),
-    filterYear: document.getElementById('filterYear')
+    filterCategory: document.getElementById('filterCategory'),
+    tableContainer: document.querySelector('.table-container')
 };
 
 // Utility Functions
 const utils = {
-    /**
-     * Format date to YYYY-MM-DD
-     * @param {Date} date - Date object to format
-     * @returns {string} Formatted date string
-     */
     formatDate: (date) => {
         const year = date.getFullYear();
         const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -39,18 +47,27 @@ const utils = {
         return `${year}-${month}-${day}`;
     },
 
-    /**
-     * Check if date is weekend
-     * @param {Date} date - Date to check
-     * @returns {boolean} True if weekend
-     */
+    parseDate: (dateStr) => {
+        const [year, month, day] = dateStr.split('-').map(Number);
+        return new Date(year, month - 1, day);
+    },
+
+    formatDisplayDate: (date) => {
+        return date.toLocaleDateString('id-ID', { day: '2-digit', month: '2-digit' });
+    },
+
+    formatFullDate: (dateStr) => {
+        const date = utils.parseDate(dateStr);
+        return date.toLocaleDateString('id-ID', { 
+            weekday: 'short', 
+            day: 'numeric', 
+            month: 'short', 
+            year: 'numeric' 
+        });
+    },
+
     isWeekend: (date) => [0, 6].includes(date.getDay()),
 
-    /**
-     * Check if date is today
-     * @param {Date} date - Date to check
-     * @returns {boolean} True if today
-     */
     isToday: (date) => {
         const today = new Date();
         return date.getDate() === today.getDate() && 
@@ -58,20 +75,8 @@ const utils = {
                date.getFullYear() === today.getFullYear();
     },
 
-    /**
-     * Get number of days in month
-     * @param {number} year - Year
-     * @param {number} month - Month (0-11)
-     * @returns {number} Days in month
-     */
     getDaysInMonth: (year, month) => new Date(year, month + 1, 0).getDate(),
 
-    /**
-     * Debounce function to limit rapid calls
-     * @param {Function} func - Function to debounce
-     * @param {number} delay - Delay in ms
-     * @returns {Function} Debounced function
-     */
     debounce: (func, delay) => {
         let timeout;
         return (...args) => {
@@ -80,35 +85,56 @@ const utils = {
         };
     },
 
-    /**
-     * Calculate optimal cell width based on container
-     * @returns {number} Calculated cell width
-     */
     calculateCellWidth: () => {
         const containerWidth = document.querySelector('.container').clientWidth;
         const daysInMonth = utils.getDaysInMonth(state.currentYear, state.currentMonth);
-        const unitColumnWidth = 200;
-        const minCellWidth = 45;
+        const unitColumnWidth = 180;
+        const minCellWidth = 40;
         const availableWidth = containerWidth - unitColumnWidth - 40;
         
         return Math.max(minCellWidth, Math.floor(availableWidth / daysInMonth));
+    },
+    
+    isMobileDevice: () => {
+        return window.innerWidth <= 768 || 
+               /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     }
 };
 
 // Core Functions
 const core = {
-    /**
-     * Load units data from JSON file
-     * @returns {Promise} Promise with units data
-     */
     loadUnits: async () => {
         try {
             const response = await fetch(CONFIG.unitsJsonPath);
-            if (!response.ok) throw new Error('Failed to load units');
+            if (!response.ok) throw new Error('Failed to load units.json');
             
             const data = await response.json();
-            state.units = data.units || [];
-            state.categories = data.categories || [];
+            
+            // Handle duplicate names by adding index
+            const nameCount = {};
+            const processedUnits = [];
+            
+            data.units.forEach(unit => {
+                nameCount[unit.name] = (nameCount[unit.name] || 0) + 1;
+            });
+            
+            const nameIndex = {};
+            data.units.forEach(unit => {
+                let displayName = unit.name;
+                if (nameCount[unit.name] > 1) {
+                    nameIndex[unit.name] = (nameIndex[unit.name] || 0) + 1;
+                    displayName = `${unit.name} (${nameIndex[unit.name]})`;
+                }
+                
+                processedUnits.push({
+                    originalName: unit.name,
+                    displayName: displayName,
+                    category: unit.category
+                });
+            });
+            
+            state.units = processedUnits;
+            state.categories = data.categories;
             return { units: state.units, categories: state.categories };
         } catch (error) {
             console.error('Error loading units:', error);
@@ -116,73 +142,108 @@ const core = {
         }
     },
 
-    /**
-     * Load booking data from Google Apps Script
-     * @returns {Promise} Promise with booking data
-     */
     loadBookingData: async () => {
         elements.loadingIndicator.style.display = 'flex';
+        elements.matrixBody.innerHTML = '<tr><td colspan="100%">Memuat data...</td></tr>';
         
         try {
             const timestamp = Date.now();
             const url = `${CONFIG.googleScriptUrl}?action=getBookings&month=${state.currentMonth + 1}&year=${state.currentYear}&t=${timestamp}`;
             
             const response = await fetch(url);
-            if (!response.ok) throw new Error('Failed to load data');
+            if (!response.ok) throw new Error('Gagal memuat data');
             
             const data = await response.json();
-            if (!data?.success) throw new Error(data?.message || 'Invalid data');
+            if (!data?.success) throw new Error(data?.message || 'Format data tidak valid');
             
-            state.bookingData = data.data || {};
+            // Normalize booking data
+            state.bookingData = {};
+            Object.entries(data.data).forEach(([key, value]) => {
+                if (value) {
+                    state.bookingData[key] = {
+                        date: value.date,
+                        unit: value.unit,
+                        description: value.description || '',
+                        status: value.status || 'available'
+                    };
+                }
+            });
+            
+            elements.lastUpdated.textContent = new Date().toLocaleString('id-ID');
             core.generateMatrix();
         } catch (error) {
             console.error('Error:', error);
-            elements.matrixBody.innerHTML = `<tr><td colspan="100%">Error loading data</td></tr>`;
+            elements.matrixBody.innerHTML = `<tr><td colspan="100%">Error: ${error.message}</td></tr>`;
         } finally {
             elements.loadingIndicator.style.display = 'none';
         }
     },
 
-    /**
-     * Generate date headers for the matrix
-     */
     generateDateHeaders: () => {
-        elements.dateHeaderRow.innerHTML = '<th class="unit-header">Barang</th>';
+        while (elements.dateHeaderRow.children.length > 1) {
+            elements.dateHeaderRow.removeChild(elements.dateHeaderRow.lastChild);
+        }
         
         const daysInMonth = utils.getDaysInMonth(state.currentYear, state.currentMonth);
         const cellWidth = utils.calculateCellWidth();
         
+        // Tambahkan kelas untuk menyesuaikan lebar berdasarkan jumlah hari
+        elements.tableContainer.classList.remove('days-28', 'days-30', 'days-31');
+        if (daysInMonth === 28) {
+            elements.tableContainer.classList.add('days-28');
+        } else if (daysInMonth === 30) {
+            elements.tableContainer.classList.add('days-30');
+        } else {
+            elements.tableContainer.classList.add('days-31');
+        }
+        
         for (let day = 1; day <= daysInMonth; day++) {
             const date = new Date(state.currentYear, state.currentMonth, day);
+            const dateStr = utils.formatDate(date);
+            
             const th = document.createElement('th');
             th.classList.add('date-header');
             if (utils.isWeekend(date)) th.classList.add('weekend');
             if (utils.isToday(date)) th.classList.add('today');
             
             th.textContent = day;
+            th.dataset.date = dateStr;
             th.style.minWidth = `${cellWidth}px`;
             elements.dateHeaderRow.appendChild(th);
         }
     },
 
-    /**
-     * Generate the booking matrix
-     */
     generateMatrix: () => {
+        const monthName = new Date(state.currentYear, state.currentMonth, 1)
+            .toLocaleString('id-ID', { month: 'long' });
+        elements.monthYearDisplay.textContent = `${monthName} ${state.currentYear}`;
+        
         core.generateDateHeaders();
         elements.matrixBody.innerHTML = '';
         
         const selectedCategory = elements.filterCategory.value;
-        const filteredUnits = selectedCategory === 'Semua' 
-            ? state.units 
-            : state.units.filter(unit => unit.category === selectedCategory);
+        const selectedUnitDisplayName = elements.filterUnit.selectedOptions[0]?.dataset.displayName;
+        const selectedStatus = elements.filterStatus.value;
+        
+        // Apply filters
+        let filteredUnits = state.units;
+        
+        if (selectedCategory !== 'Semua') {
+            filteredUnits = filteredUnits.filter(unit => unit.category === selectedCategory);
+        }
+        
+        if (selectedUnitDisplayName && selectedUnitDisplayName !== 'all') {
+            filteredUnits = filteredUnits.filter(unit => unit.displayName === selectedUnitDisplayName);
+        }
+        
+        filteredUnits.sort((a, b) => a.displayName.localeCompare(b.displayName));
         
         const cellWidth = utils.calculateCellWidth();
         
         filteredUnits.forEach(unit => {
             const row = document.createElement('tr');
             const unitCell = document.createElement('td');
-            unitCell.textContent = unit.name;
+            unitCell.textContent = unit.displayName;
             unitCell.classList.add('unit-cell');
             row.appendChild(unitCell);
             
@@ -190,37 +251,42 @@ const core = {
             for (let day = 1; day <= daysInMonth; day++) {
                 const date = new Date(state.currentYear, state.currentMonth, day);
                 const dateStr = utils.formatDate(date);
-                const unitDateKey = `${unit.name}_${dateStr}`;
+                const unitDateKey = `${unit.originalName}_${dateStr}`;
                 
                 const cell = document.createElement('td');
                 cell.classList.add('date-cell');
                 if (utils.isWeekend(date)) cell.classList.add('weekend');
                 if (utils.isToday(date)) cell.classList.add('today');
                 
-                // Set dynamic width
                 cell.style.minWidth = `${cellWidth}px`;
-                
-                // Reset status classes
                 cell.classList.remove('available', 'booked');
                 
-                // Apply status
-                if (state.bookingData[unitDateKey]?.status === 'booked') {
-                    cell.classList.add('booked');
-                } else {
+                // Process booking data
+                const booking = state.bookingData[unitDateKey];
+                const description = booking?.description || '';
+                
+                if (booking && (selectedStatus === 'all' || booking.status === selectedStatus)) {
+                    cell.classList.add(booking.status);
+                    if (description) {
+                        cell.innerHTML = `<div class="description" title="${description}"><small>${description}</small></div>`;
+                    }
+                } else if (!booking && (selectedStatus === 'all' || selectedStatus === 'available')) {
                     cell.classList.add('available');
+                    if (description) {
+                        cell.innerHTML = `<div class="description" title="${description}"><small>${description}</small></div>`;
+                    }
                 }
                 
+                cell.dataset.unit = unit.originalName;
+                cell.dataset.date = dateStr;
+                cell.addEventListener('click', () => core.openBookingModal(unit.originalName, dateStr));
                 row.appendChild(cell);
             }
             elements.matrixBody.appendChild(row);
         });
     },
 
-    /**
-     * Populate filter dropdowns
-     */
-    populateFilters: () => {
-        // Populate category filter
+    populateCategoryFilter: () => {
         elements.filterCategory.innerHTML = '<option value="Semua">Semua</option>';
         state.categories.forEach(category => {
             const option = document.createElement('option');
@@ -228,76 +294,123 @@ const core = {
             option.textContent = category;
             elements.filterCategory.appendChild(option);
         });
+    },
 
-        // Populate year filter (current year -2 to +3)
-        const currentYear = new Date().getFullYear();
-        elements.filterYear.innerHTML = '';
-        for (let year = currentYear - 2; year <= currentYear + 3; year++) {
+    populateUnitFilter: () => {
+        const selectedCategory = elements.filterCategory.value;
+        elements.filterUnit.innerHTML = '<option value="all" data-display-name="all">Semua Barang</option>';
+        
+        const unitsToShow = selectedCategory === 'Semua' 
+            ? state.units 
+            : state.units.filter(unit => unit.category === selectedCategory);
+        
+        unitsToShow.sort((a, b) => a.displayName.localeCompare(b.displayName));
+        
+        unitsToShow.forEach(unit => {
             const option = document.createElement('option');
-            option.value = year;
-            option.textContent = year;
-            if (year === state.currentYear) option.selected = true;
-            elements.filterYear.appendChild(option);
-        }
+            option.value = unit.originalName;
+            option.textContent = unit.displayName;
+            option.dataset.displayName = unit.displayName;
+            elements.filterUnit.appendChild(option);
+        });
+    },
 
-        // Set current month
-        elements.filterMonth.value = state.currentMonth;
-    }
+    openBookingModal: (unit, dateStr) => {
+        state.selectedUnit = unit;
+        state.selectedDate = dateStr;
+        const unitDateKey = `${unit}_${dateStr}`;
+        const booking = state.bookingData[unitDateKey];
+        
+        elements.bookingUnitElem.textContent = unit;
+        elements.bookingDateElem.textContent = utils.formatFullDate(dateStr);
+        
+        if (booking) {
+            elements.bookingDescription.textContent = booking.description || '-';
+            elements.bookingStatus.textContent = booking.status === 'booked' ? 'Terbooking' : 'Tersedia';
+        } else {
+            elements.bookingDescription.textContent = '-';
+            elements.bookingStatus.textContent = 'Tersedia';
+        }
+        
+        state.bookingModal.show();
+    },
+
+    handleWindowResize: utils.debounce(() => {
+        if (elements.matrixBody.children.length > 0) {
+            core.generateMatrix();
+        }
+    }, 300)
 };
 
 // Event Handlers
 const handlers = {
-    /**
-     * Handle filter changes (month/year)
-     */
-    onFilterChange: () => {
-        state.currentMonth = parseInt(elements.filterMonth.value);
-        state.currentYear = parseInt(elements.filterYear.value);
+    onPrevMonth: () => {
+        state.currentMonth--;
+        if (state.currentMonth < 0) {
+            state.currentMonth = 11;
+            state.currentYear--;
+        }
         core.loadBookingData();
     },
 
-    /**
-     * Handle category filter change
-     */
-    onCategoryChange: () => {
-        // Update unit filter based on selected category
-        elements.filterUnit.innerHTML = '<option value="all">Semua Barang</option>';
-        const selectedCategory = elements.filterCategory.value;
-        const filteredUnits = selectedCategory === 'Semua' 
-            ? state.units 
-            : state.units.filter(unit => unit.category === selectedCategory);
-            
-        filteredUnits.forEach(unit => {
-            const option = document.createElement('option');
-            option.value = unit.name;
-            option.textContent = unit.name;
-            elements.filterUnit.appendChild(option);
-        });
+    onNextMonth: () => {
+        state.currentMonth++;
+        if (state.currentMonth > 11) {
+            state.currentMonth = 0;
+            state.currentYear++;
+        }
+        core.loadBookingData();
+    },
 
+    onRefresh: async () => {
+        try {
+            elements.loadingIndicator.style.display = 'flex';
+            await core.loadUnits();
+            core.populateCategoryFilter();
+            core.populateUnitFilter();
+            await core.loadBookingData();
+        } finally {
+            elements.loadingIndicator.style.display = 'none';
+        }
+    },
+
+    onCategoryChange: () => {
+        core.populateUnitFilter();
         core.generateMatrix();
     }
 };
 
 // Initialize Application
 const init = async () => {
+    state.bookingModal = new bootstrap.Modal(elements.bookingModalElem);
+    
+    const now = new Date();
+    state.currentMonth = now.getMonth();
+    state.currentYear = now.getFullYear();
+    
     try {
         elements.loadingIndicator.style.display = 'flex';
         await core.loadUnits();
-        core.populateFilters();
+        core.populateCategoryFilter();
+        core.populateUnitFilter();
         await core.loadBookingData();
     } finally {
         elements.loadingIndicator.style.display = 'none';
     }
     
-    // Set up event listeners
+    elements.prevMonthBtn.addEventListener('click', handlers.onPrevMonth);
+    elements.nextMonthBtn.addEventListener('click', handlers.onNextMonth);
+    elements.refreshBtn.addEventListener('click', handlers.onRefresh);
+    elements.filterStatus.addEventListener('change', core.generateMatrix);
     elements.filterCategory.addEventListener('change', handlers.onCategoryChange);
-    elements.filterMonth.addEventListener('change', handlers.onFilterChange);
-    elements.filterYear.addEventListener('change', handlers.onFilterChange);
     elements.filterUnit.addEventListener('change', core.generateMatrix);
-
-    // Handle window resize
-    window.addEventListener('resize', utils.debounce(core.generateMatrix, 300));
+    
+    elements.bookingModalElem.addEventListener('hidden.bs.modal', () => {
+        elements.refreshBtn.focus();
+    });
+    
+    window.addEventListener('resize', core.handleWindowResize);
+    elements.lastUpdated.textContent = new Date().toLocaleString('id-ID');
 };
 
-// Start the application
 document.addEventListener('DOMContentLoaded', init);
