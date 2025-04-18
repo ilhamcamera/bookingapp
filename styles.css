@@ -12,10 +12,6 @@
     --danger-color: #c62828;
 }
 
-html {
-    scroll-behavior: smooth; /* Membuat scroll lebih halus */
-}
-
 body {
     background-color: #f5f7fa;
     font-family: 'Montserrat', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -23,7 +19,6 @@ body {
     line-height: 1.6;
     margin: 0;
     padding: 0;
-    overscroll-behavior-y: contain; /* Mencegah overscroll di body */
 }
 
 h1, h2, h3, h4, h5, h6,
@@ -40,7 +35,6 @@ h1, h2, h3, h4, h5, h6,
     background-color: white;
     border-radius: 12px;
     box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
-    will-change: transform; /* Optimasi performa */
 }
 
 h1 {
@@ -98,8 +92,6 @@ h1 {
     margin-bottom: 20px;
     padding-bottom: 15px;
     border-bottom: 1px solid var(--border-color);
-    contain: layout; /* Kurangi reflow */
-    will-change: transform;
 }
 
 .btn {
@@ -176,8 +168,6 @@ h1 {
     position: relative;
     background-color: white;
     -webkit-overflow-scrolling: touch;
-    overscroll-behavior: contain; /* Mencegah overscroll di tabel */
-    contain: layout; /* Mengurangi reflow */
 }
 
 .booking-matrix {
@@ -604,13 +594,13 @@ h1 {
     .date-cell {
         height: auto;
         padding: 4px;
-        min-width: 35px;
-        width: 35px;
-        max-width: 35px;
+        min-width: 40px;
+        width: 40px;
+        max-width: 40px;
     }
     
     .customer-name {
-        font-size: 0.55rem;
+        font-size: 0.6rem;
         padding: 2px 0;
         max-height: none;
         -webkit-line-clamp: unset;
@@ -620,7 +610,7 @@ h1 {
     }
     
     .description {
-        font-size: 0.5rem;
+        font-size: 0.55rem;
         padding: 2px 0;
         max-height: none;
         -webkit-line-clamp: unset;
@@ -664,19 +654,19 @@ h1 {
     }
     
     .unit-header, .unit-cell {
-        min-width: 100px;
-        width: 100px;
-        max-width: 100px;
-        font-size: 0.75rem;
-        padding: 6px 8px;
+        min-width: 120px;
+        width: 120px;
+        max-width: 120px;
+        font-size: 0.8rem;
+        padding: 8px 10px;
     }
     
     .date-cell {
-        min-width: 30px;
-        width: 30px;
-        max-width: 30px;
-        height: 35px;
-        font-size: 0.65rem;
+        min-width: 35px;
+        width: 35px;
+        max-width: 35px;
+        height: 40px;
+        font-size: 0.7rem;
     }
     
     .month-year {
