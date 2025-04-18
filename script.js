@@ -14,8 +14,7 @@ const state = {
     currentMonth: new Date().getMonth(),
     currentYear: new Date().getFullYear(),
     bookingModal: null,
-    scrollPosition: 0,
-    lastFocusedElement: null // Menyimpan elemen yang terakhir fokus
+    scrollPosition: 0 // Added for scroll position
 };
 
 // Cache DOM Elements
@@ -90,8 +89,8 @@ const utils = {
     calculateCellWidth: () => {
         const containerWidth = document.querySelector('.container').clientWidth;
         const daysInMonth = utils.getDaysInMonth(state.currentYear, state.currentMonth);
-        const unitColumnWidth = utils.isMobileDevice() ? 100 : 180;
-        const minCellWidth = utils.isMobileDevice() ? 30 : 35;
+        const unitColumnWidth = 180;
+        const minCellWidth = utils.isMobileDevice() ? 35 : 40;
         const availableWidth = containerWidth - unitColumnWidth - 40;
         
         return Math.max(minCellWidth, Math.floor(availableWidth / daysInMonth));
@@ -115,7 +114,7 @@ const core = {
     loadUnits: async () => {
         try {
             const response = await fetch(CONFIG.unitsJsonPath);
-            if (!response.ok) throw new Error('Gagal memuat units.json');
+            if (!response.ok) throw new Error('Failed to load units.json');
             
             const data = await response.json();
             
@@ -145,7 +144,7 @@ const core = {
             state.categories = data.categories;
             return { units: state.units, categories: state.categories };
         } catch (error) {
-            console.error('Error memuat units:', error);
+            console.error('Error loading units:', error);
             throw error;
         }
     },
@@ -195,7 +194,7 @@ const core = {
             elements.dateHeaderRow.removeChild(elements.dateHeaderRow.lastChild);
         }
         
-        const daysInMonth = utils.getDaysInMonth(state.numberYear, state.currentMonth);
+        const daysInMonth = utils.getDaysInMonth(state.currentYear, state.currentMonth);
         const cellWidth = utils.calculateCellWidth();
         
         elements.tableContainer.classList.remove('days-28', 'days-30', 'days-31');
@@ -296,10 +295,7 @@ const core = {
                 cell.dataset.date = dateStr;
                 
                 if (cell.classList.contains('available') && !utils.isPastDate(dateStr)) {
-                    cell.addEventListener('click', () => {
-                        state.lastFocusedElement = cell; // Simpan elemen yang diklik
-                        core.openBookingModal(unit.originalName, dateStr);
-                    });
+                    cell.addEventListener('click', () => core.openBookingModal(unit.originalName, dateStr));
                     cell.style.cursor = 'pointer';
                 } else {
                     cell.style.cursor = 'default';
@@ -352,9 +348,7 @@ const core = {
         
         state.scrollPosition = window.scrollY || window.pageYOffset;
         
-        const modal = new bootstrap.Modal(document.getElementById('bookingModal'), {
-            focus: false // Nonaktifkan fokus otomatis Bootstrap
-        });
+        const modal = new bootstrap.Modal(document.getElementById('bookingModal'));
         
         document.getElementById('selectedUnit').value = unit;
         document.getElementById('selectedDate').value = dateStr;
@@ -383,10 +377,10 @@ const core = {
     },
 
     handleWindowResize: utils.debounce(() => {
-        if (elements.matrixBody.children.length > 0 && !state.isKeyboardOpen) {
+        if (elements.matrixBody.children.length > 0) {
             core.generateMatrix();
         }
-    }, 600) // Naikkan debounce ke 600ms
+    }, 500)
 };
 
 // Handle form submission
@@ -481,26 +475,11 @@ const handlers = {
 
 // Initialize Application
 const init = async () => {
-    state.bookingModal = new bootstrap.Modal(elements.bookingModalElem, {
-        focus: false // Nonaktifkan fokus otomatis Bootstrap
-    });
+    state.bookingModal = new bootstrap.Modal(elements.bookingModalElem);
     
     const now = new Date();
     state.currentMonth = now.getMonth();
     state.currentYear = now.getFullYear();
-    
-    // Deteksi keyboard virtual
-    state.isKeyboardOpen = false;
-    window.addEventListener('resize', () => {
-        const isMobile = utils.isMobileDevice();
-        const viewportHeight = window.innerHeight;
-        const threshold = 200; // Ambang batas untuk mendeteksi keyboard
-        if (isMobile && viewportHeight < window.screen.height - threshold) {
-            state.isKeyboardOpen = true;
-        } else {
-            state.isKeyboardOpen = false;
-        }
-    });
     
     try {
         if (elements.loadingIndicator) {
@@ -511,7 +490,7 @@ const init = async () => {
         core.populateUnitFilter();
         await core.loadBookingData();
     } catch (error) {
-        console.error('Error inisialisasi:', error);
+        console.error('Initialization error:', error);
         elements.matrixBody.innerHTML = `<tr><td colspan="100%">Error: Gagal menginisialisasi aplikasi</td></tr>`;
     } finally {
         if (elements.loadingIndicator) {
@@ -526,28 +505,14 @@ const init = async () => {
     elements.filterCategory.addEventListener('change', handlers.onCategoryChange);
     elements.filterUnit.addEventListener('change', core.generateMatrix);
     
-    elements.bookingModalElem.addEventListener('shown.bs.modal', () => {
-        document.body.style.overflow = 'hidden'; // Nonaktifkan scroll saat modal aktif
-    });
-    
     elements.bookingModalElem.addEventListener('hidden.bs.modal', () => {
-        document.body.style.overflow = ''; // Aktifkan kembali scroll
-        window.scrollTo(0, state.scrollPosition || 0); // Kembalikan posisi scroll
-        if (state.lastFocusedElement) {
-            state.lastFocusedElement.focus(); // Kembalikan fokus ke elemen terakhir
-        }
+        window.scrollTo(0, state.scrollPosition || 0);
     });
     
-    // Cegah scroll saat modal aktif
     elements.tableContainer.addEventListener('touchmove', (e) => {
         if (state.bookingModal?._isShown) {
             e.preventDefault();
         }
-    });
-    
-    // Debug fokus untuk mendeteksi masalah
-    document.addEventListener('focusin', (e) => {
-        console.log('Fokus berpindah ke:', e.target);
     });
     
     window.addEventListener('resize', core.handleWindowResize);
