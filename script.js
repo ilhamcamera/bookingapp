@@ -13,7 +13,8 @@ const state = {
     selectedDate: null,
     currentMonth: new Date().getMonth(),
     currentYear: new Date().getFullYear(),
-    bookingModal: null
+    bookingModal: null,
+    scrollPosition: 0 // Added for scroll position
 };
 
 // Cache DOM Elements
@@ -89,7 +90,7 @@ const utils = {
         const containerWidth = document.querySelector('.container').clientWidth;
         const daysInMonth = utils.getDaysInMonth(state.currentYear, state.currentMonth);
         const unitColumnWidth = 180;
-        const minCellWidth = 40;
+        const minCellWidth = utils.isMobileDevice() ? 35 : 40;
         const availableWidth = containerWidth - unitColumnWidth - 40;
         
         return Math.max(minCellWidth, Math.floor(availableWidth / daysInMonth));
@@ -345,6 +346,8 @@ const core = {
             return;
         }
         
+        state.scrollPosition = window.scrollY || window.pageYOffset;
+        
         const modal = new bootstrap.Modal(document.getElementById('bookingModal'));
         
         document.getElementById('selectedUnit').value = unit;
@@ -377,7 +380,7 @@ const core = {
         if (elements.matrixBody.children.length > 0) {
             core.generateMatrix();
         }
-    }, 300)
+    }, 500)
 };
 
 // Handle form submission
@@ -503,7 +506,13 @@ const init = async () => {
     elements.filterUnit.addEventListener('change', core.generateMatrix);
     
     elements.bookingModalElem.addEventListener('hidden.bs.modal', () => {
-        elements.refreshBtn.focus();
+        window.scrollTo(0, state.scrollPosition || 0);
+    });
+    
+    elements.tableContainer.addEventListener('touchmove', (e) => {
+        if (state.bookingModal?._isShown) {
+            e.preventDefault();
+        }
     });
     
     window.addEventListener('resize', core.handleWindowResize);
