@@ -103,7 +103,7 @@ const utils = {
     isPastDate: (dateStr) => {
         const selectedDate = utils.parseDate(dateStr);
         const today = new Date();
-        today.setHours(0, 0, 0, 0); // Reset time to midnight for comparison
+        today.setHours(0, 0, 0, 0);
         return selectedDate < today;
     }
 };
@@ -117,7 +117,6 @@ const core = {
             
             const data = await response.json();
             
-            // Handle duplicate names by adding index
             const nameCount = {};
             const processedUnits = [];
             
@@ -165,7 +164,6 @@ const core = {
             const data = await response.json();
             if (!data?.success) throw new Error(data?.message || 'Format data tidak valid');
             
-            // Normalize booking data
             state.bookingData = {};
             Object.entries(data.data).forEach(([key, value]) => {
                 if (value) {
@@ -198,7 +196,6 @@ const core = {
         const daysInMonth = utils.getDaysInMonth(state.currentYear, state.currentMonth);
         const cellWidth = utils.calculateCellWidth();
         
-        // Tambahkan kelas untuk menyesuaikan lebar berdasarkan jumlah hari
         elements.tableContainer.classList.remove('days-28', 'days-30', 'days-31');
         if (daysInMonth === 28) {
             elements.tableContainer.classList.add('days-28');
@@ -236,7 +233,6 @@ const core = {
         const selectedUnitDisplayName = elements.filterUnit.selectedOptions[0]?.dataset.displayName;
         const selectedStatus = elements.filterStatus.value;
         
-        // Apply filters
         let filteredUnits = state.units;
         
         if (selectedCategory !== 'Semua') {
@@ -272,7 +268,6 @@ const core = {
                 cell.style.minWidth = `${cellWidth}px`;
                 cell.classList.remove('available', 'booked');
                 
-                // Process booking data
                 const booking = state.bookingData[unitDateKey];
                 const description = booking?.description || '';
                 
@@ -280,17 +275,17 @@ const core = {
                     cell.classList.add(booking.status);
                     if (description) {
                         cell.innerHTML = `
-                            <div class="customer-name">${booking.status === 'booked' ? '' : ''}</div>
-                            <div class="description" title="${description}">${description}</div>
+                            <div class="customer-name" style="font-size: 0.6rem;">${booking.status === 'booked' ? '' : ''}</div>
+                            <div class="description" style="font-size: 0.55rem;" title="${description}">${description}</div>
                         `;
                     } else {
-                        cell.innerHTML = `<div class="customer-name">${booking.status === 'booked' ? '' : ''}</div>`;
+                        cell.innerHTML = `<div class="customer-name" style="font-size: 0.6rem;">${booking.status === 'booked' ? '' : ''}</div>`;
                     }
                 } else if (!booking && (selectedStatus === 'all' || selectedStatus === 'available')) {
                     cell.classList.add('available');
                     if (description) {
                         cell.innerHTML = `
-                            <div class="description" title="${description}">${description}</div>
+                            <div class="description" style="font-size: 0.55rem;" title="${description}">${description}</div>
                         `;
                     }
                 }
@@ -298,33 +293,11 @@ const core = {
                 cell.dataset.unit = unit.originalName;
                 cell.dataset.date = dateStr;
                 
-                // Only add click event listener for available cells that are not past dates
                 if (cell.classList.contains('available') && !utils.isPastDate(dateStr)) {
                     cell.addEventListener('click', () => core.openBookingModal(unit.originalName, dateStr));
                     cell.style.cursor = 'pointer';
                 } else {
                     cell.style.cursor = 'default';
-                }
-                
-                // Adjust cell height for mobile
-                if (utils.isMobileDevice()) {
-                    cell.style.height = 'auto';
-                    cell.style.padding = '5px';
-                    const descriptionDiv = cell.querySelector('.description');
-                    if (descriptionDiv) {
-                        descriptionDiv.style.maxHeight = 'none';
-                        descriptionDiv.style.webkitLineClamp = 'unset';
-                        descriptionDiv.style.overflow = 'visible';
-                        descriptionDiv.style.fontSize = '0.6rem';
-                    }
-                    const customerNameDiv = cell.querySelector('.customer-name');
-                    if (customerNameDiv) {
-                        customerNameDiv.style.maxHeight = 'none';
-                        customerNameDiv.style.webkitLineClamp = 'unset';
-                        customerNameDiv.style.overflow = 'visible';
-                        customerNameDiv.style.fontSize = '0.65rem';
-                        customerNameDiv.style.display = 'block'; // Pastikan muncul di mobile
-                    }
                 }
                 
                 row.appendChild(cell);
@@ -365,22 +338,20 @@ const core = {
     openBookingModal: (unit, dateStr) => {
         const selectedDate = utils.parseDate(dateStr);
         const today = new Date();
-        today.setHours(0, 0, 0, 0); // Reset time to midnight for comparison
-
+        today.setHours(0, 0, 0, 0);
+        
         if (selectedDate < today) {
             alert('Tanggal yang dipilih sudah berlalu. Silakan pilih tanggal hari ini atau yang akan datang.');
             return;
         }
-
+        
         const modal = new bootstrap.Modal(document.getElementById('bookingModal'));
         
-        // Set nilai form
         document.getElementById('selectedUnit').value = unit;
         document.getElementById('selectedDate').value = dateStr;
         document.getElementById('displayUnit').textContent = unit;
         document.getElementById('displayDate').textContent = utils.formatFullDate(dateStr);
         
-        // Set tanggal pengembalian default (1 hari setelah sewa)
         const date = utils.parseDate(dateStr);
         const returnDate = new Date(date);
         returnDate.setDate(returnDate.getDate() + 1);
@@ -389,7 +360,6 @@ const core = {
         document.getElementById('pickupTime').value = '08:00';
         document.getElementById('returnTime').value = '17:00';
         
-        // Reset form
         document.getElementById('bookingForm').reset();
         document.getElementById('selectedUnit').value = unit;
         document.getElementById('selectedDate').value = dateStr;
@@ -414,7 +384,6 @@ const core = {
 document.getElementById('bookingForm').addEventListener('submit', function(e) {
     e.preventDefault();
     
-    // Validasi dokumen
     const documents = Array.from(document.querySelectorAll('input[name="documents"]:checked')).map(cb => cb.value);
     if (documents.length < 3) {
         document.getElementById('documentsError').style.display = 'block';
@@ -433,7 +402,6 @@ document.getElementById('bookingForm').addEventListener('submit', function(e) {
         documents: documents.join(', ')
     };
     
-    // Format pesan WhatsApp
     const whatsappMessage = `Halo, saya ${formData.name} ingin menyewa barang berikut:
     
 *Detail Penyewaan:*
@@ -454,10 +422,8 @@ Mohon konfirmasi ketersediaannya. Terima kasih.`;
     const encodedMessage = encodeURIComponent(whatsappMessage);
     const whatsappLink = `https://wa.me/628999240196?text=${encodedMessage}`;
     
-    // Buka WhatsApp
     window.open(whatsappLink, '_blank');
     
-    // Tutup modal
     const modal = bootstrap.Modal.getInstance(document.getElementById('bookingModal'));
     modal.hide();
 });
