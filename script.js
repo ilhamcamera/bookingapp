@@ -98,6 +98,13 @@ const utils = {
     isMobileDevice: () => {
         return window.innerWidth <= 768 || 
                /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    },
+
+    isPastDate: (dateStr) => {
+        const selectedDate = utils.parseDate(dateStr);
+        const today = new Date();
+        today.setHours(0, 0, 0, 0); // Reset time to midnight for comparison
+        return selectedDate < today;
     }
 };
 
@@ -143,7 +150,9 @@ const core = {
     },
 
     loadBookingData: async () => {
-        elements.loadingIndicator.style.display = 'flex';
+        if (elements.loadingIndicator) {
+            elements.loadingIndicator.style.display = 'flex';
+        }
         elements.matrixBody.innerHTML = '<tr><td colspan="100%">Memuat data...</td></tr>';
         
         try {
@@ -175,7 +184,9 @@ const core = {
             console.error('Error:', error);
             elements.matrixBody.innerHTML = `<tr><td colspan="100%">Error: ${error.message}</td></tr>`;
         } finally {
-            elements.loadingIndicator.style.display = 'none';
+            if (elements.loadingIndicator) {
+                elements.loadingIndicator.style.display = 'none';
+            }
         }
     },
 
@@ -268,18 +279,54 @@ const core = {
                 if (booking && (selectedStatus === 'all' || booking.status === selectedStatus)) {
                     cell.classList.add(booking.status);
                     if (description) {
-                        cell.innerHTML = `<div class="description" title="${description}"><small>${description}</small></div>`;
+                        cell.innerHTML = `
+                            <div class="customer-name">${booking.status === 'booked' ? '' : ''}</div>
+                            <div class="description" title="${description}">${description}</div>
+                        `;
+                    } else {
+                        cell.innerHTML = `<div class="customer-name">${booking.status === 'booked' ? '' : ''}</div>`;
                     }
                 } else if (!booking && (selectedStatus === 'all' || selectedStatus === 'available')) {
                     cell.classList.add('available');
                     if (description) {
-                        cell.innerHTML = `<div class="description" title="${description}"><small>${description}</small></div>`;
+                        cell.innerHTML = `
+                            <div class="description" title="${description}">${description}</div>
+                        `;
                     }
                 }
                 
                 cell.dataset.unit = unit.originalName;
                 cell.dataset.date = dateStr;
-                cell.addEventListener('click', () => core.openBookingModal(unit.originalName, dateStr));
+                
+                // Only add click event listener for available cells that are not past dates
+                if (cell.classList.contains('available') && !utils.isPastDate(dateStr)) {
+                    cell.addEventListener('click', () => core.openBookingModal(unit.originalName, dateStr));
+                    cell.style.cursor = 'pointer';
+                } else {
+                    cell.style.cursor = 'default';
+                }
+                
+                // Adjust cell height for mobile
+                if (utils.isMobileDevice()) {
+                    cell.style.height = 'auto';
+                    cell.style.padding = '5px';
+                    const descriptionDiv = cell.querySelector('.description');
+                    if (descriptionDiv) {
+                        descriptionDiv.style.maxHeight = 'none';
+                        descriptionDiv.style.webkitLineClamp = 'unset';
+                        descriptionDiv.style.overflow = 'visible';
+                        descriptionDiv.style.fontSize = '0.6rem';
+                    }
+                    const customerNameDiv = cell.querySelector('.customer-name');
+                    if (customerNameDiv) {
+                        customerNameDiv.style.maxHeight = 'none';
+                        customerNameDiv.style.webkitLineClamp = 'unset';
+                        customerNameDiv.style.overflow = 'visible';
+                        customerNameDiv.style.fontSize = '0.65rem';
+                        customerNameDiv.style.display = 'block'; // Pastikan muncul di mobile
+                    }
+                }
+                
                 row.appendChild(cell);
             }
             elements.matrixBody.appendChild(row);
@@ -316,23 +363,44 @@ const core = {
     },
 
     openBookingModal: (unit, dateStr) => {
-        state.selectedUnit = unit;
-        state.selectedDate = dateStr;
-        const unitDateKey = `${unit}_${dateStr}`;
-        const booking = state.bookingData[unitDateKey];
-        
-        elements.bookingUnitElem.textContent = unit;
-        elements.bookingDateElem.textContent = utils.formatFullDate(dateStr);
-        
-        if (booking) {
-            elements.bookingDescription.textContent = booking.description || '-';
-            elements.bookingStatus.textContent = booking.status === 'booked' ? 'Terbooking' : 'Tersedia';
-        } else {
-            elements.bookingDescription.textContent = '-';
-            elements.bookingStatus.textContent = 'Tersedia';
+        const selectedDate = utils.parseDate(dateStr);
+        const today = new Date();
+        today.setHours(0, 0, 0, 0); // Reset time to midnight for comparison
+
+        if (selectedDate < today) {
+            alert('Tanggal yang dipilih sudah berlalu. Silakan pilih tanggal hari ini atau yang akan datang.');
+            return;
         }
+
+        const modal = new bootstrap.Modal(document.getElementById('bookingModal'));
         
-        state.bookingModal.show();
+        // Set nilai form
+        document.getElementById('selectedUnit').value = unit;
+        document.getElementById('selectedDate').value = dateStr;
+        document.getElementById('displayUnit').textContent = unit;
+        document.getElementById('displayDate').textContent = utils.formatFullDate(dateStr);
+        
+        // Set tanggal pengembalian default (1 hari setelah sewa)
+        const date = utils.parseDate(dateStr);
+        const returnDate = new Date(date);
+        returnDate.setDate(returnDate.getDate() + 1);
+        
+        document.getElementById('returnDate').value = utils.formatDate(returnDate);
+        document.getElementById('pickupTime').value = '08:00';
+        document.getElementById('returnTime').value = '17:00';
+        
+        // Reset form
+        document.getElementById('bookingForm').reset();
+        document.getElementById('selectedUnit').value = unit;
+        document.getElementById('selectedDate').value = dateStr;
+        document.getElementById('displayUnit').textContent = unit;
+        document.getElementById('displayDate').textContent = utils.formatFullDate(dateStr);
+        document.getElementById('returnDate').value = utils.formatDate(returnDate);
+        document.getElementById('pickupTime').value = '08:00';
+        document.getElementById('returnTime').value = '17:00';
+        document.getElementById('documentsError').style.display = 'none';
+        
+        modal.show();
     },
 
     handleWindowResize: utils.debounce(() => {
@@ -341,6 +409,58 @@ const core = {
         }
     }, 300)
 };
+
+// Handle form submission
+document.getElementById('bookingForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    // Validasi dokumen
+    const documents = Array.from(document.querySelectorAll('input[name="documents"]:checked')).map(cb => cb.value);
+    if (documents.length < 3) {
+        document.getElementById('documentsError').style.display = 'block';
+        return;
+    }
+    
+    const formData = {
+        unit: document.getElementById('selectedUnit').value,
+        date: document.getElementById('selectedDate').value,
+        pickupTime: document.getElementById('pickupTime').value,
+        returnDate: document.getElementById('returnDate').value,
+        returnTime: document.getElementById('returnTime').value,
+        name: document.getElementById('customerName').value,
+        phone: document.getElementById('customerPhone').value,
+        address: document.getElementById('customerAddress').value,
+        documents: documents.join(', ')
+    };
+    
+    // Format pesan WhatsApp
+    const whatsappMessage = `Halo, saya ${formData.name} ingin menyewa barang berikut:
+    
+*Detail Penyewaan:*
+Barang: ${formData.unit}
+Tanggal Sewa: ${utils.formatFullDate(formData.date)} jam ${formData.pickupTime}
+Tanggal Kembali: ${utils.formatFullDate(formData.returnDate)} jam ${formData.returnTime}
+
+*Data Diri:*
+Nama: ${formData.name}
+Telepon: ${formData.phone}
+Alamat: ${formData.address}
+
+*Dokumen Jaminan:*
+${formData.documents}
+
+Mohon konfirmasi ketersediaannya. Terima kasih.`;
+    
+    const encodedMessage = encodeURIComponent(whatsappMessage);
+    const whatsappLink = `https://wa.me/628999240196?text=${encodedMessage}`;
+    
+    // Buka WhatsApp
+    window.open(whatsappLink, '_blank');
+    
+    // Tutup modal
+    const modal = bootstrap.Modal.getInstance(document.getElementById('bookingModal'));
+    modal.hide();
+});
 
 // Event Handlers
 const handlers = {
@@ -364,13 +484,17 @@ const handlers = {
 
     onRefresh: async () => {
         try {
-            elements.loadingIndicator.style.display = 'flex';
+            if (elements.loadingIndicator) {
+                elements.loadingIndicator.style.display = 'flex';
+            }
             await core.loadUnits();
             core.populateCategoryFilter();
             core.populateUnitFilter();
             await core.loadBookingData();
         } finally {
-            elements.loadingIndicator.style.display = 'none';
+            if (elements.loadingIndicator) {
+                elements.loadingIndicator.style.display = 'none';
+            }
         }
     },
 
@@ -389,13 +513,20 @@ const init = async () => {
     state.currentYear = now.getFullYear();
     
     try {
-        elements.loadingIndicator.style.display = 'flex';
+        if (elements.loadingIndicator) {
+            elements.loadingIndicator.style.display = 'flex';
+        }
         await core.loadUnits();
         core.populateCategoryFilter();
         core.populateUnitFilter();
         await core.loadBookingData();
+    } catch (error) {
+        console.error('Initialization error:', error);
+        elements.matrixBody.innerHTML = `<tr><td colspan="100%">Error: Gagal menginisialisasi aplikasi</td></tr>`;
     } finally {
-        elements.loadingIndicator.style.display = 'none';
+        if (elements.loadingIndicator) {
+            elements.loadingIndicator.style.display = 'none';
+        }
     }
     
     elements.prevMonthBtn.addEventListener('click', handlers.onPrevMonth);
