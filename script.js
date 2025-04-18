@@ -276,7 +276,7 @@ const core = {
                     if (description) {
                         cell.innerHTML = `
                             <div class="customer-name" style="font-size: 0.5rem;">${booking.status === 'booked' ? '' : ''}</div>
-                            <div class="description" style="font-size: 0.35rem;" title="${description}">${description}</div>
+                            <div class="description" style="font-size: 0.45rem;" title="${description}">${description}</div>
                         `;
                     } else {
                         cell.innerHTML = `<div class="customer-name" style="font-size: 0.5rem;">${booking.status === 'booked' ? '' : ''}</div>`;
@@ -285,7 +285,7 @@ const core = {
                     cell.classList.add('available');
                     if (description) {
                         cell.innerHTML = `
-                            <div class="description" style="font-size: 0.35rem;" title="${description}">${description}</div>
+                            <div class="description" style="font-size: 0.45rem;" title="${description}">${description}</div>
                         `;
                     }
                 }
