@@ -14,7 +14,10 @@ const state = {
     currentMonth: new Date().getMonth(),
     currentYear: new Date().getFullYear(),
     bookingModal: null,
-    scrollPosition: 0 // Added for scroll position
+    filterPanelOpen: false,
+    scrollPosition: 0,
+    touchStartX: 0,
+    touchStartY: 0
 };
 
 // Cache DOM Elements
@@ -26,13 +29,10 @@ const elements = {
     prevMonthBtn: document.getElementById('prevMonth'),
     nextMonthBtn: document.getElementById('nextMonth'),
     refreshBtn: document.getElementById('refreshBtn'),
-    lastUpdated: document.getElementById('lastUpdated'),
+    filterBtn: document.getElementById('filterBtn'),
+    filterPanel: document.getElementById('filterPanel'),
+    closeFilterBtn: document.getElementById('closeFilterBtn'),
     bookingModalElem: document.getElementById('bookingModal'),
-    bookingDateElem: document.getElementById('bookingDate'),
-    bookingUnitElem: document.getElementById('bookingUnit'),
-    bookingDescription: document.getElementById('bookingDescription'),
-    bookingStatus: document.getElementById('bookingStatus'),
-    loadingIndicator: document.getElementById('loadingIndicator'),
     filterStatus: document.getElementById('filterStatus'),
     filterUnit: document.getElementById('filterUnit'),
     filterCategory: document.getElementById('filterCategory'),
@@ -53,10 +53,6 @@ const utils = {
         return new Date(year, month - 1, day);
     },
 
-    formatDisplayDate: (date) => {
-        return date.toLocaleDateString('id-ID', { day: '2-digit', month: '2-digit' });
-    },
-
     formatFullDate: (dateStr) => {
         const date = utils.parseDate(dateStr);
         return date.toLocaleDateString('id-ID', { 
@@ -66,8 +62,6 @@ const utils = {
             year: 'numeric' 
         });
     },
-
-    isWeekend: (date) => [0, 6].includes(date.getDay()),
 
     isToday: (date) => {
         const today = new Date();
@@ -89,16 +83,10 @@ const utils = {
     calculateCellWidth: () => {
         const containerWidth = document.querySelector('.container').clientWidth;
         const daysInMonth = utils.getDaysInMonth(state.currentYear, state.currentMonth);
-        const unitColumnWidth = 180;
-        const minCellWidth = utils.isMobileDevice() ? 35 : 40;
-        const availableWidth = containerWidth - unitColumnWidth - 40;
-        
+        const unitColumnWidth = 100;
+        const minCellWidth = 40;
+        const availableWidth = containerWidth - unitColumnWidth - 20;
         return Math.max(minCellWidth, Math.floor(availableWidth / daysInMonth));
-    },
-    
-    isMobileDevice: () => {
-        return window.innerWidth <= 768 || 
-               /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     },
 
     isPastDate: (dateStr) => {
@@ -177,7 +165,6 @@ const core = {
                 }
             });
             
-            elements.lastUpdated.textContent = new Date().toLocaleString('id-ID');
             core.generateMatrix();
         } catch (error) {
             console.error('Error:', error);
@@ -197,22 +184,12 @@ const core = {
         const daysInMonth = utils.getDaysInMonth(state.currentYear, state.currentMonth);
         const cellWidth = utils.calculateCellWidth();
         
-        elements.tableContainer.classList.remove('days-28', 'days-30', 'days-31');
-        if (daysInMonth === 28) {
-            elements.tableContainer.classList.add('days-28');
-        } else if (daysInMonth === 30) {
-            elements.tableContainer.classList.add('days-30');
-        } else {
-            elements.tableContainer.classList.add('days-31');
-        }
-        
         for (let day = 1; day <= daysInMonth; day++) {
             const date = new Date(state.currentYear, state.currentMonth, day);
             const dateStr = utils.formatDate(date);
             
             const th = document.createElement('th');
             th.classList.add('date-header');
-            if (utils.isWeekend(date)) th.classList.add('weekend');
             if (utils.isToday(date)) th.classList.add('today');
             
             th.textContent = day;
@@ -263,7 +240,6 @@ const core = {
                 
                 const cell = document.createElement('td');
                 cell.classList.add('date-cell');
-                if (utils.isWeekend(date)) cell.classList.add('weekend');
                 if (utils.isToday(date)) cell.classList.add('today');
                 
                 cell.style.minWidth = `${cellWidth}px`;
@@ -276,17 +252,14 @@ const core = {
                     cell.classList.add(booking.status);
                     if (description) {
                         cell.innerHTML = `
-                            <div class="customer-name" style="font-size: 0.5rem;">${booking.status === 'booked' ? '' : ''}</div>
-                            <div class="description" style="font-size: 0.45rem;" title="${description}">${description}</div>
+                            <div class="description" title="${description}">${description}</div>
                         `;
-                    } else {
-                        cell.innerHTML = `<div class="customer-name" style="font-size: 0.5rem;">${booking.status === 'booked' ? '' : ''}</div>`;
                     }
                 } else if (!booking && (selectedStatus === 'all' || selectedStatus === 'available')) {
                     cell.classList.add('available');
                     if (description) {
                         cell.innerHTML = `
-                            <div class="description" style="font-size: 0.45rem;" title="${description}">${description}</div>
+                            <div class="description" title="${description}">${description}</div>
                         `;
                     }
                 }
@@ -346,9 +319,9 @@ const core = {
             return;
         }
         
-        state.scrollPosition = window.scrollY || window.pageYOffset;
+        console.log('Opening modal for unit:', unit, 'date:', dateStr);
         
-        const modal = new bootstrap.Modal(document.getElementById('bookingModal'));
+        state.scrollPosition = window.scrollY || window.pageYOffset;
         
         document.getElementById('selectedUnit').value = unit;
         document.getElementById('selectedDate').value = dateStr;
@@ -373,7 +346,27 @@ const core = {
         document.getElementById('returnTime').value = '17:00';
         document.getElementById('documentsError').style.display = 'none';
         
+        const modal = bootstrap.Modal.getInstance(elements.bookingModalElem) || new bootstrap.Modal(elements.bookingModalElem);
         modal.show();
+        console.log('Modal shown');
+    },
+
+    toggleFilterPanel: () => {
+        state.filterPanelOpen = !state.filterPanelOpen;
+        elements.filterPanel.classList.toggle('open', state.filterPanelOpen);
+        if (state.filterPanelOpen) {
+            state.scrollPosition = window.scrollY || window.pageYOffset;
+            document.body.style.position = 'fixed';
+            document.body.style.top = `-${state.scrollPosition}px`;
+            document.body.style.width = '100%';
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.position = '';
+            document.body.style.top = '';
+            document.body.style.width = '';
+            document.body.style.overflow = '';
+            window.scrollTo(0, state.scrollPosition || 0);
+        }
     },
 
     handleWindowResize: utils.debounce(() => {
@@ -428,7 +421,9 @@ Mohon konfirmasi ketersediaannya. Terima kasih.`;
     window.open(whatsappLink, '_blank');
     
     const modal = bootstrap.Modal.getInstance(document.getElementById('bookingModal'));
-    modal.hide();
+    if (modal) {
+        modal.hide();
+    }
 });
 
 // Event Handlers
@@ -470,13 +465,28 @@ const handlers = {
     onCategoryChange: () => {
         core.populateUnitFilter();
         core.generateMatrix();
+    },
+
+    onTouchStart: (e) => {
+        state.touchStartX = e.touches[0].clientX;
+        state.touchStartY = e.touches[0].clientY;
+    },
+
+    onTouchMove: (e) => {
+        const touchX = e.touches[0].clientX;
+        const touchY = e.touches[0].clientY;
+        const deltaX = state.touchStartX - touchX;
+        const deltaY = state.touchStartY - touchY;
+
+        if (Math.abs(deltaX) > Math.abs(deltaY)) {
+            e.preventDefault();
+            elements.tableContainer.scrollLeft += deltaX * 1;
+        }
     }
 };
 
 // Initialize Application
 const init = async () => {
-    state.bookingModal = new bootstrap.Modal(elements.bookingModalElem);
-    
     const now = new Date();
     state.currentMonth = now.getMonth();
     state.currentYear = now.getFullYear();
@@ -501,22 +511,40 @@ const init = async () => {
     elements.prevMonthBtn.addEventListener('click', handlers.onPrevMonth);
     elements.nextMonthBtn.addEventListener('click', handlers.onNextMonth);
     elements.refreshBtn.addEventListener('click', handlers.onRefresh);
+    elements.filterBtn.addEventListener('click', core.toggleFilterPanel);
+    elements.closeFilterBtn.addEventListener('click', core.toggleFilterPanel);
     elements.filterStatus.addEventListener('change', core.generateMatrix);
     elements.filterCategory.addEventListener('change', handlers.onCategoryChange);
     elements.filterUnit.addEventListener('change', core.generateMatrix);
     
+    elements.bookingModalElem.addEventListener('show.bs.modal', () => {
+        console.log('Modal is showing');
+        state.scrollPosition = window.scrollY || window.pageYOffset;
+        document.body.style.position = 'fixed';
+        document.body.style.top = `-${state.scrollPosition}px`;
+        document.body.style.width = '100%';
+        document.body.style.overflow = 'hidden';
+    });
+    
+    elements.bookingModalElem.addEventListener('shown.bs.modal', () => {
+        console.log('Modal fully shown');
+        const firstInput = document.getElementById('pickupTime');
+        if (firstInput) firstInput.focus();
+    });
+    
     elements.bookingModalElem.addEventListener('hidden.bs.modal', () => {
+        console.log('Modal hidden');
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.width = '';
+        document.body.style.overflow = '';
         window.scrollTo(0, state.scrollPosition || 0);
     });
     
-    elements.tableContainer.addEventListener('touchmove', (e) => {
-        if (state.bookingModal?._isShown) {
-            e.preventDefault();
-        }
-    });
+    elements.tableContainer.addEventListener('touchstart', handlers.onTouchStart);
+    elements.tableContainer.addEventListener('touchmove', handlers.onTouchMove, { passive: false });
     
     window.addEventListener('resize', core.handleWindowResize);
-    elements.lastUpdated.textContent = new Date().toLocaleString('id-ID');
 };
 
 document.addEventListener('DOMContentLoaded', init);
