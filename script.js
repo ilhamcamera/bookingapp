@@ -275,17 +275,17 @@ const core = {
                     cell.classList.add(booking.status);
                     if (description) {
                         cell.innerHTML = `
-                            <div class="customer-name" style="font-size: 0.6rem;">${booking.status === 'booked' ? '' : ''}</div>
-                            <div class="description" style="font-size: 0.55rem;" title="${description}">${description}</div>
+                            <div class="customer-name" style="font-size: 0.5rem;">${booking.status === 'booked' ? '' : ''}</div>
+                            <div class="description" style="font-size: 0.35rem;" title="${description}">${description}</div>
                         `;
                     } else {
-                        cell.innerHTML = `<div class="customer-name" style="font-size: 0.6rem;">${booking.status === 'booked' ? '' : ''}</div>`;
+                        cell.innerHTML = `<div class="customer-name" style="font-size: 0.5rem;">${booking.status === 'booked' ? '' : ''}</div>`;
                     }
                 } else if (!booking && (selectedStatus === 'all' || selectedStatus === 'available')) {
                     cell.classList.add('available');
                     if (description) {
                         cell.innerHTML = `
-                            <div class="description" style="font-size: 0.55rem;" title="${description}">${description}</div>
+                            <div class="description" style="font-size: 0.35rem;" title="${description}">${description}</div>
                         `;
                     }
                 }
