@@ -349,6 +349,55 @@ const core = {
         const modal = bootstrap.Modal.getInstance(elements.bookingModalElem) || new bootstrap.Modal(elements.bookingModalElem);
         modal.show();
         console.log('Modal shown');
+
+        // iOS-specific fix: Ensure modal is fully interactive
+        if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+            setTimeout(() => {
+                const backdrop = document.querySelector('.modal-backdrop');
+                const modalContent = document.querySelector('.modal-content');
+                const modalBody = document.querySelector('.modal-body');
+                const inputs = modalBody.querySelectorAll('input, textarea, select, button');
+
+                if (backdrop) {
+                    backdrop.style.pointerEvents = 'none';
+                    backdrop.style.zIndex = '1050';
+                }
+                if (modalContent) {
+                    modalContent.style.pointerEvents = 'auto';
+                    modalContent.style.zIndex = '1075';
+                    modalContent.style.overflow = 'auto';
+                    modalContent.style.webkitOverflowScrolling = 'touch';
+                }
+                if (modalBody) {
+                    modalBody.style.overflow = 'auto';
+                    modalBody.style.webkitOverflowScrolling = 'touch';
+                    modalBody.style.touchAction = 'auto';
+                }
+                inputs.forEach(input => {
+                    input.style.pointerEvents = 'auto';
+                    input.style.touchAction = 'manipulation';
+                    input.style.webkitUserSelect = 'auto';
+                    input.style.userSelect = 'auto';
+                });
+
+                // Force focus on first input
+                const firstInput = document.getElementById('pickupTime');
+                if (firstInput) {
+                    firstInput.focus();
+                }
+            }, 100);
+
+            // Add touch event listeners to ensure responsiveness
+            const modalDialog = document.querySelector('.modal-dialog');
+            if (modalDialog) {
+                modalDialog.addEventListener('touchstart', (e) => {
+                    e.stopPropagation();
+                }, { passive: true });
+                modalDialog.addEventListener('touchmove', (e) => {
+                    e.stopPropagation();
+                }, { passive: true });
+            }
+        }
     },
 
     toggleFilterPanel: () => {
@@ -370,7 +419,7 @@ const core = {
     },
 
     handleWindowResize: utils.debounce(() => {
-        if (elements.matrixBody.children.length > 0) {
+        if (elements.matrixBody.children.length > 0 && !state.filterPanelOpen) {
             core.generateMatrix();
         }
     }, 500)
@@ -520,6 +569,7 @@ const init = async () => {
     elements.bookingModalElem.addEventListener('show.bs.modal', () => {
         console.log('Modal is showing');
         state.scrollPosition = window.scrollY || window.pageYOffset;
+        document.body.classList.add('modal-open');
         document.body.style.position = 'fixed';
         document.body.style.top = `-${state.scrollPosition}px`;
         document.body.style.width = '100%';
@@ -534,6 +584,7 @@ const init = async () => {
     
     elements.bookingModalElem.addEventListener('hidden.bs.modal', () => {
         console.log('Modal hidden');
+        document.body.classList.remove('modal-open');
         document.body.style.position = '';
         document.body.style.top = '';
         document.body.style.width = '';
