@@ -1,6 +1,6 @@
 {
-  "name": "Ilhamcam BookingApp",
-  "short_name": "Ilcam BookApp",
+  "name": "Ilham Camera BookingApp",
+  "short_name": "Booking",
   "icons": [
     {
       "src": "/web-app-manifest-192x192.png",
